@@ -148,6 +148,9 @@ class Map:
         elif obj == 'b':
             return 'M', 5
 
+        elif obj == 'h':
+            return '+', 5
+
         elif obj == 'b_u_atk':
             return '^', 5
 
