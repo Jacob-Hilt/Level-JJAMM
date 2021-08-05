@@ -185,7 +185,7 @@ class Map:
 
     def setupMap(self):
         self.stdscr = curses.initscr()
-        #self.stdscr.nodelay(True)
+        self.stdscr.nodelay(True)
         curses.noecho()
         curses.cbreak()
         self.stdscr.keypad(True)
