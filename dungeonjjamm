@@ -222,16 +222,16 @@ def game(c, playObj, mapObj, mapArr, fileNum):
 
     newMap = None
     if c == ord('w'):
-        newMap = playObj.move('w', mapObj)
+        newMap = playObj.move('w', mapObj, fileNum)
 
     elif c == ord('a'):
-        newMap = playObj.move('a', mapObj)
+        newMap = playObj.move('a', mapObj, fileNum)
     
     elif c == ord('s'):
-        newMap = playObj.move('s', mapObj)
+        newMap = playObj.move('s', mapObj, fileNum)
 
     elif c == ord('d'):
-        newMap = playObj.move('d', mapObj)
+        newMap = playObj.move('d', mapObj, fileNum)
 
     elif c == curses.KEY_LEFT or c == curses.KEY_RIGHT or c == curses.KEY_UP or c == curses.KEY_DOWN:
         equipped = playObj.get_equipped()
@@ -341,7 +341,8 @@ if __name__ == "__main__":
 
             # https://stackoverflow.com/questions/2259228/how-are-booleans-formatted-in-strings-in-python
             if isinstance(newMap, int):
-                mapArr[fileNum].winCond = 'T'
+                if newMap > fileNum:
+                    mapArr[fileNum].winCond = 'T'
                 mapArr[fileNum].stdscr.clear()
                 fileNum = newMap
                 break
