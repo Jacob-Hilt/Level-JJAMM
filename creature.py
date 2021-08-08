@@ -11,7 +11,7 @@ class creature:
 
     def movement(self, mapObj):
         if(self.alive == 0):
-            mapObj.objArr[self.ypos][self.xpos] = '-'
+            #mapObj.objArr[self.ypos][self.xpos] = '-'
             return [0, mapObj]
         if(self.typ == 0 or self.typ == 1):
             return [1, mapObj]

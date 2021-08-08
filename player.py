@@ -75,7 +75,7 @@ class Player:
         else:
             return False
 
-    def move(self, keystroke, mapObj):
+    def move(self, keystroke, mapObj, fileNum):
         desx = 0
         desy = 0
         # moving up
@@ -143,6 +143,9 @@ class Player:
 
                 return -1
         elif mapObj.exitArr[desy][desx] >= 0: #Previously:  elif dest == 'e'
+            if mapObj.exitArr[desy][desx] < fileNum:
+                return mapObj.exitArr[desy][desx]
+
             if mapObj.winCheck(self):
                 mapObj.objArr[self.y_pos][self.x_pos] = '-'
                 dest = 'p'
