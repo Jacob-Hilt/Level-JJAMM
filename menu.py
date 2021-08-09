@@ -6,15 +6,13 @@ from curses import wrapper
 import time
 
 class Menu:
+    #initializes time, death count and refresh count for menu
     def __init__(self):                             #holds level start time to calculate time for timer
             self.start_time = round(time.time(),2)
             self.current_deaths = 0
             self.refresh = 0
-
-    def reset_timer(self):                              #resets timer for new level
-            self.start_time = round(time.time(),2)
-            pass
-
+    
+    #calls print border, stats and time, weapons, win condition and death message functions to display on menu
     def display_menu(self, begin_x, playObj, mapObj):                #Displays menu border, time and lives
             stdscr = curses.initscr()
             curses.start_color()
@@ -45,10 +43,12 @@ class Menu:
             
             pass
 
-    def get_time():                      #Helper function to return elapsed time for level
+    #Helper function to return elapsed time for level
+    def get_time():                 
             current_time = round(time.time(), 2)
             return round((current_time - self.start_time), 2)
 
+    #Print border around menu window
     def print_border(self, stdscr, begin_y, begin_x):
             for i in range(0, 25):        #printing horizontal border
                     stdscr.addch(begin_y,begin_x+i, "*", curses.color_pair(9)) 
@@ -57,6 +57,7 @@ class Menu:
                     stdscr.addch(begin_y+i,begin_x, "*", curses.color_pair(9)) 
                     stdscr.addch(begin_y+i,begin_x+24, "*", curses.color_pair(9)) 
 
+    #prints deaths, time and keys on menu
     def print_stats_and_time(self, stdscr, playObj, begin_y, begin_x):
             current_time = round(time.time(), 2)
             time_elapsed = "Time Elapsed: " + str(round((current_time - self.start_time), 2))
@@ -67,6 +68,7 @@ class Menu:
             stdscr.addstr(begin_y+4, begin_x+1, 'keys: %s' %playObj.key, curses.color_pair(10))
             stdscr.addstr(begin_y+6, begin_x+1, "Satchel: ", curses.color_pair(10))
     
+    #prints available weapons and *** which one is currently equipped on menu
     def print_weapons(self, playObj, stdscr, begin_y, begin_x): 
             if playObj.bow == True and playObj.sword == False and playObj.shurikens == False:
                     if playObj.equipped == 'bow':
@@ -123,6 +125,7 @@ class Menu:
                             stdscr.addstr(begin_y+8, begin_x+1, "Bow            ", curses.color_pair(10))
                             stdscr.addstr(begin_y+9, begin_x+1, "***Shurikens***", curses.color_pair(10))
 
+    #prints win condition for each level on menu
     def print_win_condition(self, mapObj, stdscr, begin_y, begin_x):
             if mapObj.winCond == 'T':
                     stdscr.addstr(begin_y+11, begin_x+1, "Reach the exit!", curses.color_pair(10))
@@ -135,6 +138,7 @@ class Menu:
             if mapObj.winCond == 'B':
                     stdscr.addstr(begin_y+11, begin_x+1, "Grab the bow!", curses.color_pair(10))
 
+    #prints "You died" message if player dies, otherwise counts up to refresh and remove message on menu
     def print_death_message(self, deathNum, stdscr, begin_y, begin_x):
             if self.current_deaths < deathNum:
                     stdscr.addstr(begin_y+13, begin_x+1, "XXX You died!!! XXX", curses.color_pair(11))
