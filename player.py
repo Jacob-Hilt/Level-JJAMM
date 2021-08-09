@@ -1,3 +1,6 @@
+#Joint effort by: Jerry Smedley, Jacob Hilt, Melissa Barnes, Mark Montes, Anthony Chin
+#This work is made available under the "MIT License". Please see the file LICENSE in this distribution for license terms.
+
 import time #found sleep function at https://www.tutorialspoint.com/python3/time_sleep.htm
 
 class Player:

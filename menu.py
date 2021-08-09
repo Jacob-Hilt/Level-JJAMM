@@ -1,5 +1,7 @@
 #This file contains methods to display menu, timer and lives of the player all in a Menu class. The display
 #is refreshed each time the player hits a key. Lives are lost or won through gameplay. 
+#Joint effort by: Jerry Smedley, Jacob Hilt, Melissa Barnes, Mark Montes, Anthony Chin
+#This work is made available under the "MIT License". Please see the file LICENSE in this distribution for license terms.
 
 import curses, curses.panel
 from curses import wrapper
