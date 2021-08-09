@@ -1,3 +1,6 @@
+#Joint effort by: Jerry Smedley, Jacob Hilt, Melissa Barnes, Mark Montes, Anthony Chin
+#This work is made available under the "MIT License". Please see the file LICENSE in this distribution for license terms.
+
 import curses
 from curses import wrapper
 import creature
