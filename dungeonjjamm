@@ -377,10 +377,12 @@ if __name__ == "__main__":
                 mapArr[fileNum].stdscr.clear()
                 fileNum = newMap
                 break
+            '''
             elif isinstance(newMap, str):
                 c = 'q'
                 fileNum = -1
                 break
+            '''
             
             #print("x: ", playObj.x_pos, "y: ", playObj.y_pos) test to see if map bounds weren't violated.
 
