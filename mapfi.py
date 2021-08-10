@@ -219,6 +219,7 @@ class Map:
 
     def reset(self, playObj):
         resKey = 0
+        curses.flushinp()
         for y in range(self.maxY):
             for x in range(self.maxX):
                 if self.initArr[y][x] == 'p':
