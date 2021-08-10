@@ -13,6 +13,7 @@ class Menu:
             self.start_time = round(time.time(),2)
             self.current_deaths = 0
             self.refresh = 0
+            curses.curs_set(0)
     
     #calls print border, stats and time, weapons, win condition and death message functions to display on menu
     def display_menu(self, begin_x, playObj, mapObj):                #Displays menu border, time and lives
