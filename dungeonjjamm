@@ -68,6 +68,7 @@ def use_sword(c, playObj, mapObj, mapArr, fileNum):
             mapObj.objArr[yDes][xDes] = mapObj.initArr[yDes][xDes]
             time.sleep(0.2)
             mapObj.displayMap()
+    curses.flushinp()
 
 
 def use_bow(c, playObj, mapObj, mapArr, fileNum):
@@ -179,6 +180,7 @@ def use_bow(c, playObj, mapObj, mapArr, fileNum):
                             time.sleep(0.1)
                             mapObj.displayMap()
                     break
+    curses.flushinp()
 
 def use_shurikens(playObj, mapObj, mapArr, fileNum):
     if playObj.get_shurikens() == False:
@@ -246,6 +248,7 @@ def use_shurikens(playObj, mapObj, mapArr, fileNum):
 
     time.sleep(0.2)
     mapObj.displayMap()
+    curses.flushinp()
 
 
 
