@@ -231,9 +231,11 @@ class Map:
             playObj.sword = False
         elif self.winCond == 'B':
             playObj.bow = False
-        elif self.winCond == 'K':
-            playObj.key -= resKey
-
+        playObj.key -= resKey
+        
+        self.enemyArr = []
+        self.loadEnemy()
+        
         self.displayMap()
 
     def winCheck(self, playObj):

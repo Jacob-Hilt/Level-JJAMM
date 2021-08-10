@@ -186,14 +186,14 @@ def use_shurikens(playObj, mapObj, mapArr, fileNum):
     xDes = playObj.x_pos
     yDes = playObj.y_pos
 
-    if (xDes - 1) > 0 and (yDes + 1) <= mapObj.maxY - 1:
+    if (xDes - 1) >= 0 and (yDes + 1) <= mapObj.maxY - 1:
         enemyType = check_enemy_type(xDes - 1, yDes + 1, mapArr, fileNum)
         if mapObj.objArr[yDes + 1][xDes - 1] == '-' or (mapObj.objArr[yDes + 1][xDes - 1].isnumeric() and mapObj.exitArr[yDes + 1][xDes - 1] >= 0) or (mapObj.objArr[yDes + 1][xDes - 1].isnumeric() and mapObj.exitArr[yDes + 1][xDes - 1] < 0 and enemyType == 3):
             kill_enemy(xDes - 1, yDes + 1, mapArr, fileNum, enemyType)
             previous_bl = mapObj.objArr[yDes + 1][xDes - 1]
             mapObj.objArr[yDes + 1][xDes - 1] = 'sh_atk'
 
-    if (xDes - 1) > 0 and (yDes - 1) > 0:
+    if (xDes - 1) >= 0 and (yDes - 1) >= 0:
         enemyType = check_enemy_type(xDes - 1, yDes - 1, mapArr, fileNum)
         if mapObj.objArr[yDes - 1][xDes - 1] == '-' or (mapObj.objArr[yDes - 1][xDes - 1].isnumeric() and mapObj.exitArr[yDes - 1][xDes - 1] >= 0) or (mapObj.objArr[yDes - 1][xDes - 1].isnumeric() and mapObj.exitArr[yDes - 1][xDes - 1] < 0 and enemyType == 3):
             kill_enemy(xDes - 1, yDes - 1, mapArr, fileNum, enemyType)
@@ -207,7 +207,7 @@ def use_shurikens(playObj, mapObj, mapArr, fileNum):
             previous_br = mapObj.objArr[yDes + 1][xDes + 1] 
             mapObj.objArr[yDes + 1][xDes + 1] = 'sh_atk'
 
-    if (xDes + 1) <= mapObj.maxX - 1 and (yDes - 1) > 0:
+    if (xDes + 1) <= mapObj.maxX - 1 and (yDes - 1) >= 0:
         enemyType = check_enemy_type(xDes + 1, yDes - 1, mapArr, fileNum)
         if mapObj.objArr[yDes - 1][xDes + 1] == '-' or (mapObj.objArr[yDes - 1][xDes + 1].isnumeric() and mapObj.exitArr[yDes - 1][xDes + 1] >= 0) or (mapObj.objArr[yDes - 1][xDes + 1].isnumeric() and mapObj.exitArr[yDes - 1][xDes + 1] < 0 and enemyType == 3):
             kill_enemy(xDes + 1, yDes - 1, mapArr, fileNum, enemyType)
@@ -216,14 +216,14 @@ def use_shurikens(playObj, mapObj, mapArr, fileNum):
 
     mapObj.displayMap()
 
-    if (xDes - 1) > 0 and (yDes + 1) <= mapObj.maxY - 1:
+    if (xDes - 1) >= 0 and (yDes + 1) <= mapObj.maxY - 1:
         if mapObj.objArr[yDes + 1][xDes - 1] == 'sh_atk':
             if mapObj.exitArr[yDes + 1][xDes - 1] < 0:
                 mapObj.objArr[yDes + 1][xDes - 1] = '-'
             else:
                 mapObj.objArr[yDes + 1][xDes - 1] = previous_bl
 
-    if (xDes - 1) > 0 and (yDes - 1) > 0:
+    if (xDes - 1) >= 0 and (yDes - 1) >= 0:
         if mapObj.objArr[yDes - 1][xDes - 1] == 'sh_atk':
             if mapObj.exitArr[yDes - 1][xDes - 1] < 0:
                 mapObj.objArr[yDes - 1][xDes - 1] = '-'
@@ -237,7 +237,7 @@ def use_shurikens(playObj, mapObj, mapArr, fileNum):
             else:
                 mapObj.objArr[yDes + 1][xDes + 1] = previous_br
 
-    if (xDes + 1) <= mapObj.maxX - 1 and (yDes - 1) > 0:
+    if (xDes + 1) <= mapObj.maxX - 1 and (yDes - 1) >= 0:
         if mapObj.objArr[yDes - 1][xDes + 1] == 'sh_atk':
             if mapObj.exitArr[yDes - 1][xDes + 1] < 0:
                 mapObj.objArr[yDes - 1][xDes + 1] = '-'
@@ -377,10 +377,12 @@ if __name__ == "__main__":
                 mapArr[fileNum].stdscr.clear()
                 fileNum = newMap
                 break
+            '''
             elif isinstance(newMap, str):
                 c = 'q'
                 fileNum = -1
                 break
+            '''
             
             #print("x: ", playObj.x_pos, "y: ", playObj.y_pos) test to see if map bounds weren't violated.
 

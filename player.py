@@ -127,6 +127,37 @@ class Player:
             print()
             # print('You picked up the item!')
 
+
+
+        elif mapObj.exitArr[desy][desx] >= 0: #Previously:  elif dest == 'e'
+            '''
+            if mapObj.exitArr[desy][desx] < fileNum:
+                for y in range(mapObj.maxY):
+                    for x in range(mapObj.maxX):
+                        mapObj.initArr[y][x] = mapObj.objArr[y][x]
+                return mapObj.exitArr[desy][desx]
+            '''
+
+            if mapObj.winCheck(self) or mapObj.exitArr[desy][desx] < fileNum:
+                '''
+                mapObj.objArr[self.y_pos][self.x_pos] = '-'
+                dest = 'p'
+                mapObj.displayMap()
+                dest = mapObj.objArr[desy][desx]
+                '''
+                mapObj.startY = self.y_pos
+                mapObj.startX = self.x_pos
+                '''
+                mapObj.objArr[self.y_pos][self.x_pos] = 'p'
+                time.sleep(1)
+                '''
+
+                for y in range(mapObj.maxY):
+                    for x in range(mapObj.maxX):
+                        mapObj.initArr[y][x] = mapObj.objArr[y][x]
+                return mapObj.exitArr[desy][desx]
+
+        '''
         elif mapObj.exitArr[desy][desx] == 'q':
             if mapObj.winCheck(self):
                 mapObj.objArr[self.y_pos][self.x_pos] = '-'
@@ -145,24 +176,7 @@ class Player:
                 # every player input
 
                 return -1
-        elif mapObj.exitArr[desy][desx] >= 0: #Previously:  elif dest == 'e'
-            if mapObj.exitArr[desy][desx] < fileNum:
-                return mapObj.exitArr[desy][desx]
-
-            if mapObj.winCheck(self):
-                mapObj.objArr[self.y_pos][self.x_pos] = '-'
-                dest = 'p'
-                mapObj.displayMap()
-                dest = mapObj.objArr[desy][desx]
-                mapObj.startY = self.y_pos
-                mapObj.startX = self.x_pos
-                mapObj.objArr[self.y_pos][self.x_pos] = 'p'
-                time.sleep(1)
-
-                for y in range(mapObj.maxY):
-                    for x in range(mapObj.maxX):
-                        mapObj.initArr[y][x] = mapObj.objArr[y][x]
-                return mapObj.exitArr[desy][desx]
+        '''
 
 
                         
