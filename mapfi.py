@@ -87,22 +87,25 @@ class Map:
         for y in range(self.maxY):
             for x in range(self.maxX):
                 if self.initArr[y][x] == 'e':
-                    self.initArr[y][x] = '-'
+                    # self.initArr[y][x] = '-'
                     self.objArr[y][x] = '-'
                     ex = x + 1
                     exNum = ''
-                    while self.initArr[y][ex] != 'e' and ex < self.maxX:
+                    # while self.initArr[y][ex] != 'e' and ex < self.maxX:
+                    while self.initArr[y][ex].isnumeric() and ex < self.maxX:
+
                         exNum += self.initArr[y][ex]
                         ex += 1
                     if exNum.isnumeric():
                         exNum = int(exNum)
                     x += 1
-                    while self.objArr[y][x] != 'e' and ex < self.maxX:
+                    # while self.objArr[y][x] != 'e' and ex < self.maxX:
+                    while self.initArr[y][x].isnumeric() and x < self.maxX:
                         self.exitArr[y][x] = exNum
                         x += 1
                     if self.objArr[y][x] == 'e':
                         self.objArr[y][x] = '-'
-                        self.initArr[y][x] = '-'
+                        # self.initArr[y][x] = '-'
 
         '''
         y = 0
@@ -260,4 +263,5 @@ class Map:
         elif self.winCond == 'K':
             if playObj.key > 0:
                 playObj.key -= 1
+                self.winCond = 'T'
                 return True
