@@ -102,6 +102,7 @@ def main():
     x = 0
     # stdscr.move(y, x)
     mapObj.objArr[y][x] = 'c'
+    # TODO: ensure terminal size is greater than 14 wide
     mapObj.stdscr.addstr(y, mapObj.maxX + 2, 'w: Wall', curses.color_pair(7))
     mapObj.stdscr.addstr(1, mapObj.maxX + 2, '-: Blank', curses.color_pair(7))
     mapObj.stdscr.addstr(2, mapObj.maxX + 2, 'p: Player', curses.color_pair(7))
