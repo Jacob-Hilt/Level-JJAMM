@@ -5,6 +5,7 @@
 # This is our main excutable, this will pull functions from the other files to run all of them here
 
 import curses
+from start_menu import *
 #from curses import wrapper
 import os
 import mapfi
@@ -68,6 +69,7 @@ def use_sword(c, playObj, mapObj, mapArr, fileNum):
             mapObj.objArr[yDes][xDes] = mapObj.initArr[yDes][xDes]
             time.sleep(0.2)
             mapObj.displayMap()
+    curses.flushinp()
 
 
 def use_bow(c, playObj, mapObj, mapArr, fileNum):
@@ -179,6 +181,7 @@ def use_bow(c, playObj, mapObj, mapArr, fileNum):
                             time.sleep(0.1)
                             mapObj.displayMap()
                     break
+    curses.flushinp()
 
 def use_shurikens(playObj, mapObj, mapArr, fileNum):
     if playObj.get_shurikens() == False:
@@ -246,6 +249,7 @@ def use_shurikens(playObj, mapObj, mapArr, fileNum):
 
     time.sleep(0.2)
     mapObj.displayMap()
+    curses.flushinp()
 
 
 
@@ -299,8 +303,23 @@ def game(c, playObj, mapObj, mapArr, fileNum):
 
 if __name__ == "__main__":
 
+
     # path = input('input the directory name: ') # TODO: Uncomment this
-    path = 'levels' #TODO: Comment This.
+    # path = 'levels' #TODO: Comment This.
+
+    
+    # path = input('input the directory name: ')
+    mode = start_menu()
+    if mode == 'Start':
+        path = 'levels' # Temporary, for testing
+    elif mode == 'Tutorial':
+        path = 'tutorials'
+    elif mode == 'Load Custom':
+        path = 'custom'
+    elif mode == 'Quit':
+        curses.endwin()
+
+
     path = './' + path
     inFile = []
     mapArr = []
