@@ -21,7 +21,12 @@ def newFile(userPath):
         height = input('Enter the height: ')
     width = int(width)
     height = int(height)
-    #TODO: Insert checks for width and height compared to terminal size
+    stdscr = curses.initscr()
+    if width > curses.COLS - 1 + 50:
+        width = curses.COLS - 1 - 50
+    if height > curses.LINES - 1:
+        height = curses.LINES - 1
+    curses.endwin()
     dashes = '-' * width
     dashes += '\n'
     fi = open(userPath, 'a')
@@ -97,6 +102,22 @@ def main():
     x = 0
     # stdscr.move(y, x)
     mapObj.objArr[y][x] = 'c'
+    mapObj.stdscr.addstr(y, mapObj.maxX + 2, 'w: Wall', curses.color_pair(7))
+    mapObj.stdscr.addstr(1, mapObj.maxX + 2, '-: Blank', curses.color_pair(7))
+    mapObj.stdscr.addstr(2, mapObj.maxX + 2, 'p: Player', curses.color_pair(7))
+    mapObj.stdscr.addstr(3, mapObj.maxX + 2, 'k: Key', curses.color_pair(7))
+    mapObj.stdscr.addstr(4, mapObj.maxX + 2, 's: Sword', curses.color_pair(7))
+    mapObj.stdscr.addstr(5, mapObj.maxX + 2, 'b: Bow', curses.color_pair(7))
+    mapObj.stdscr.addstr(6, mapObj.maxX + 2, 'h: Shuriken', curses.color_pair(7))
+    mapObj.stdscr.addstr(7, mapObj.maxX + 2, 'Number: Enemy', curses.color_pair(7))
+    mapObj.stdscr.addstr(9, mapObj.maxX + 2, 'Place e next to', curses.color_pair(7))
+    mapObj.stdscr.addstr(10, mapObj.maxX + 2, 'number to convert', curses.color_pair(7))
+    mapObj.stdscr.addstr(11, mapObj.maxX + 2, 'it to exit.', curses.color_pair(7))
+    mapObj.stdscr.addstr(12, mapObj.maxX + 2, 'q: Quit', curses.color_pair(7))
+    mapObj.stdscr.addstr(13, mapObj.maxX + 2, 'Arrows: Exit', curses.color_pair(7))
+
+
+
     while True:
         mapObj.displayMap()
         # mapObj.printInitLets()
@@ -144,6 +165,24 @@ def main():
     fi = open(userPath, 'w')
     for y in range(mapObj.maxY):
         for x in range(mapObj.maxX):
+            if mapObj.initArr[y][x] == 'e':
+                if x - 1 >= 0:
+                    if not mapObj.initArr[y][x-1].isnumeric():
+                        ex = x
+                        if x + 1 < mapObj.maxX:
+                            ex = x + 1
+                            if mapObj.initArr[y][ex] == 'e':
+                                mapObj.initArr[y][x] = '-'
+                            while mapObj.initArr[y][ex] != 'e' and ex < mapObj.maxX:
+                                if not mapObj.initArr[y][ex].isnumeric():
+                                    mapObj.initArr[y][x] = '-'
+                                    break
+                                ex += 1
+                        else:
+                            mapObj.initArr[y][x] = '-'
+                    elif mapObj.exitArr[y][x-1] < 0:
+                        mapObj.initArr[y][x] = '-'
+
             fi.write(mapObj.initArr[y][x])
         fi.write('\n')
     fi.write('\n')

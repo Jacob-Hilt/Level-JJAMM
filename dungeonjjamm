@@ -300,7 +300,7 @@ def game(c, playObj, mapObj, mapArr, fileNum):
 if __name__ == "__main__":
 
     # path = input('input the directory name: ') # TODO: Uncomment this
-    path = 'levels' #TODO: Comment This.
+    path = 'dungeon' #TODO: Comment This.
     path = './' + path
     inFile = []
     mapArr = []
