@@ -7,9 +7,9 @@ PRESSwONEwFOR
 SWORDwTWOwFOR
 wwwwwBOWwwwww
 wwwwwwwwwwwww
-w----------1w
-wpb--------1w
-w---e100e--1w
+w----------2w
+wpb--------2w
+w---e100e--2w
 wwwwwwwwwwwww
 
 B
