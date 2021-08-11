@@ -148,7 +148,7 @@ def main():
                     moveCursor(c, y, x, mapObj)
 
         else:
-            isValid(chr(c), mapObj, y, x)
+            isValid(chr(c), mapObj, y, x) # https://stackoverflow.com/questions/36319228/python-3-4-getch-a-typewriter-python
             # mapObj.initArr[y][x] = str(c)
             # mapObj.objArr[y][x] = str(c)
 
