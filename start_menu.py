@@ -49,4 +49,3 @@ def start_menu():
             return options[highlight]
         pad.refresh(0,0,0,0,curses.LINES-1,curses.COLS-1)
 
-print(start_menu())

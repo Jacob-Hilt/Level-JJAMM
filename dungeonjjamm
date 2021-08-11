@@ -5,6 +5,7 @@
 # This is our main excutable, this will pull functions from the other files to run all of them here
 
 import curses
+from start_menu import *
 #from curses import wrapper
 import os
 import mapfi
@@ -301,9 +302,18 @@ def game(c, playObj, mapObj, mapArr, fileNum):
 
 
 if __name__ == "__main__":
-
+    
     # path = input('input the directory name: ')
-    path = 'levels' # Temporary, for testing
+    mode = start_menu()
+    if mode == 'Start':
+        path = 'levels' # Temporary, for testing
+    elif mode == 'Tutorial':
+        path = 'tutorials'
+    elif mode == 'Load Custom':
+        path = 'custom'
+    elif mode == 'Quit':
+        curses.endwin()
+
     path = './' + path
     # mapArr[fileNum] = mapfi.Map()
     inFile = []
