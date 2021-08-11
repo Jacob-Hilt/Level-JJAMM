@@ -302,6 +302,11 @@ def game(c, playObj, mapObj, mapArr, fileNum):
 
 
 if __name__ == "__main__":
+
+
+    # path = input('input the directory name: ') # TODO: Uncomment this
+    # path = 'levels' #TODO: Comment This.
+
     
     # path = input('input the directory name: ')
     mode = start_menu()
@@ -314,11 +319,10 @@ if __name__ == "__main__":
     elif mode == 'Quit':
         curses.endwin()
 
+
     path = './' + path
-    # mapArr[fileNum] = mapfi.Map()
     inFile = []
     mapArr = []
-    # path = './levels'
 
     for root, directories, files in os.walk(path, topdown=False): # https://careerkarma.com/blog/python-list-files-in-directory/
         for name in files:
@@ -373,8 +377,7 @@ if __name__ == "__main__":
 
             #Enemy movement
             currTime = time.time()
-            if currTime - enemyTime >= 2: # TODO: Implement timer and move enemies
-                # plus reset timer if it's >= our selected time
+            if currTime - enemyTime >= 2:
                 for enemy in mapArr[fileNum].enemyArr:
                     check = enemy.movement(mapArr[fileNum])
                     if(check[0] == 2):
@@ -390,12 +393,6 @@ if __name__ == "__main__":
                 mapArr[fileNum].stdscr.clear()
                 fileNum = newMap
                 break
-            '''
-            elif isinstance(newMap, str):
-                c = 'q'
-                fileNum = -1
-                break
-            '''
             
             #print("x: ", playObj.x_pos, "y: ", playObj.y_pos) test to see if map bounds weren't violated.
 
@@ -406,11 +403,6 @@ if __name__ == "__main__":
             if c == ord('q'):
                 break
 
-        '''
-        mapArr[fileNum].stdscr.clear()
-        mapArr[fileNum].stdscr.refresh()
-        fileNum += 1
-        '''
 
     if fileNum >= len(inFile): fileNum = 0
     curses.nocbreak()

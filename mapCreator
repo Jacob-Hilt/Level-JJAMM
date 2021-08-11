@@ -1,0 +1,154 @@
+#!/usr/bin/python3
+
+#Joint effort by: Jerry Smedley, Jacob Hilt, Melissa Barnes, Mark Montes, Anthony Chin
+#This work is made available under the "MIT License". Please see the file LICENSE in this distribution for license terms.
+# This is our main excutable, this will pull functions from the other files to run all of them here
+
+import curses
+#from curses import wrapper
+import os
+from os import path
+import mapfi
+
+def newFile(userPath):
+    width = input('Enter the width: ')
+    height = input('Enter the height: ')
+    while not width.isnumeric():
+        print('Width not int, enter integer for width.')
+        width = input('Enter the width: ')
+    while not height.isnumeric():
+        print('Height not int, enter integer for height.')
+        height = input('Enter the height: ')
+    width = int(width)
+    height = int(height)
+    #TODO: Insert checks for width and height compared to terminal size
+    dashes = '-' * width
+    dashes += '\n'
+    fi = open(userPath, 'a')
+    for num in range(height):
+        fi.write(dashes)
+    fi.write('\n')
+    fi.write('T')
+    fi.close()
+
+def moveCursor(c, y, x, mapObj):
+    mapObj.objArr[y][x] = mapObj.initArr[y][x]
+
+    if c == curses.KEY_LEFT:
+        if x != 0:
+            x -= 1
+    elif c == curses.KEY_RIGHT:
+        if x != mapObj.maxX-1:
+            x += 1
+    elif c == curses.KEY_UP:
+        if y != 0:
+            y -= 1
+    elif c == curses.KEY_DOWN:
+        if y != mapObj.maxY-1:
+            y += 1
+
+    mapObj.objArr[y][x] = 'c'
+    mapObj.displayMap()
+    return y, x
+
+def isValid(c, mapObj, y, x):
+    if c == '-' or c == 'w' or c == 's' \
+            or c == 'b' or c == 'h' or \
+            c == 'k' or c == 'p' or c.isnumeric() \
+            or c.isupper():
+                if mapObj.initArr[y][x] == 'e':
+                    removeE(mapObj, y, x)
+                mapObj.initArr[y][x] = c
+
+def removeE(mapObj, y, x):
+    if x + 1 < mapObj.maxX:
+        x += 1
+        while x < mapObj.maxX and mapObj.initArr[y][x].isnumeric():
+            mapObj.exitArr[y][x] = -1
+            x += 1
+        if mapObj.initArr[y][x] == 'e':
+            mapObj.initArr[y][x] == '-'
+
+def winValid(mapObj):
+    if mapObj.winCond == 'T' or mapObj.winCond == 'S' \
+            or mapObj.winCond == 'E' or mapObj.winCond == 'B' \
+            or mapObj.winCond == 'K':
+                return True
+    return False
+
+def main():
+    userPath = './' + input('input the directory name (ex: levels) or q to quit: ')
+    while not path.isdir(userPath):
+        print('directory ', userPath, ' not found. Please enter an existing directory')
+        userPath = input('input the directory name or q to quit: ')
+        if userPath == 'q': 
+            return
+
+    fileName = input('Please input the file name (ex: lv0.txt): ')
+    userPath += '/' + fileName
+    if not path.exists(userPath):
+        newFile(userPath)
+    mapObj = mapfi.Map()
+    mapObj.setupMap()
+    mapObj.stdscr.nodelay(False)
+    mapObj.loadMap(userPath)
+    mapObj.loadExits()
+    y = 0
+    x = 0
+    # stdscr.move(y, x)
+    mapObj.objArr[y][x] = 'c'
+    while True:
+        mapObj.displayMap()
+        # mapObj.printInitLets()
+        # mapObj.printObjLets()
+        # mapObj.stdscr.addstr(mapObj.maxY+3, 0, "y: %s x: %s" % (y, x), curses.color_pair(7))
+       
+        c = mapObj.stdscr.getch()
+        # c = = mapObj.stdscr.getkey()
+        if c == ord('q'):
+            break
+
+        elif c == curses.KEY_LEFT or c == curses.KEY_RIGHT or c == curses.KEY_UP or c == curses.KEY_DOWN:
+            y, x = moveCursor(c, y, x, mapObj)
+
+        elif c == ord('e'):
+            if x < mapObj.maxX-1:
+                if mapObj.initArr[y][x + 1].isnumeric():
+                    xDest = x + 1
+                    while xDest < mapObj.maxX-1 and mapObj.initArr[y][xDest].isnumeric():
+                        mapObj.exitArr[y][xDest] = 0
+                        xDest += 1
+
+                    mapObj.objArr[y][x] = 'e'
+                    mapObj.initArr[y][x] = 'e'
+                    mapObj.objArr[y][x] = 'c'
+                    mapObj.initArr[y][xDest] = 'e'
+                    x = xDest
+                    moveCursor(c, y, x, mapObj)
+
+        else:
+            isValid(chr(c), mapObj, y, x)
+            # mapObj.initArr[y][x] = str(c)
+            # mapObj.objArr[y][x] = str(c)
+
+        curses.flushinp()
+    
+    curses.nocbreak()
+    mapObj.stdscr.keypad(False)
+    curses.echo()
+    curses.endwin()
+
+    mapObj.winCond = input('Please enter a win condition (ex: T): ')
+    if not winValid(mapObj):
+        mapObj.winCond = 'T'
+    fi = open(userPath, 'w')
+    for y in range(mapObj.maxY):
+        for x in range(mapObj.maxX):
+            fi.write(mapObj.initArr[y][x])
+        fi.write('\n')
+    fi.write('\n')
+    fi.write(mapObj.winCond)
+
+
+if __name__ == "__main__":
+    main()

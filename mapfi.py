@@ -140,10 +140,11 @@ class Map:
         return enemies
 
     def mapSwitch(self, obj, y, x):
+        # obj = str(obj)
         if obj.isupper():
             return obj, 7
         elif obj.isnumeric() and self.exitArr[y][x] < 0:
-            return 'X', 1
+            return obj, 1
 
         elif obj == 's':
             return '|', 5
@@ -174,6 +175,9 @@ class Map:
 
         elif obj == 'sh_atk':
             return '+', 5
+
+        elif obj == 'c':
+            return self.initArr[y][x], 2
 
 
         elif (obj.isnumeric() and self.exitArr[y][x] >= 0) or obj == 'q':
@@ -257,8 +261,3 @@ class Map:
             if playObj.key > 0:
                 playObj.key -= 1
                 return True
-
-
-    def game(self, creature, player, menu):
-        print('temp')
-
