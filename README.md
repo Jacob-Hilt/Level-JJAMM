@@ -11,7 +11,7 @@ Make sure terminal window is at least 120x30
 To run the program once it is built, enter
 ./dungeonjjamm
 
-##License
+## License
 This work is made available under the "MIT License". Please see the file LICENSE in this distribution for license terms.
 
 ## Road Map
