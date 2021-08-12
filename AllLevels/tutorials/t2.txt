@@ -1,12 +1,12 @@
-wwwwwwwwwwwww
-MENUwDISPLAYS
-WINwCONDITION
-wwwwwwwwwwwww
-YELLOWwISwKEY
-wwwwwwwwwwwww
-wwwww-k-wwwww
-wwwww---wwwww
-wwwww-p-e2eww
-wwwwwwwwwwwww
+wwwwwwwww
+wwwwwwwww
+REDwKILLS
+wwwwwwwww
+1-------1
+1---1---1
+1---p---1
+1---1---1
+1--e3e--1
+wwwwwwwww
 
-K
+T

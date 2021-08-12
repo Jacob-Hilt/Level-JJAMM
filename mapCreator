@@ -6,7 +6,6 @@
 #*****PLEASE MAKE SURE TERMINAL IS AT LEAST 120x30 SIZE FOR PROPER PERFORMANCE****
 
 import curses
-#from curses import wrapper
 import os
 from os import path
 import mapfi
@@ -28,6 +27,11 @@ def newFile(userPath):
     if height > curses.LINES - 1:
         height = curses.LINES - 1
     curses.endwin()
+    if height < 3:
+        height = 3
+    if width < 3:
+        width = 3
+
     dashes = '-' * width
     dashes += '\n'
     fi = open(userPath, 'w')
@@ -64,6 +68,9 @@ def isValid(c, mapObj, y, x):
             or c.isupper():
                 if mapObj.initArr[y][x] == 'e':
                     removeE(mapObj, y, x)
+                elif mapObj.initArr[y][x].isnumeric() and (not c.isnumeric()) \
+                        and mapObj.exitArr[y][x] >= 0:
+                            mapObj.exitArr[y][x] = -1
                 mapObj.initArr[y][x] = c
 
 def removeE(mapObj, y, x):
@@ -78,7 +85,7 @@ def removeE(mapObj, y, x):
 def winValid(mapObj):
     if mapObj.winCond == 'T' or mapObj.winCond == 'S' \
             or mapObj.winCond == 'E' or mapObj.winCond == 'B' \
-            or mapObj.winCond == 'K':
+            or mapObj.winCond == 'K' or mapObj.winCond == 'H':
                 return True
     return False
 
@@ -106,7 +113,6 @@ def main():
     mapObj.loadExits()
     y = 0
     x = 0
-    # stdscr.move(y, x)
     mapObj.objArr[y][x] = 'c'
     mapObj.stdscr.addstr(0, mapObj.maxX + 2, 'Arrows: Move', curses.color_pair(7))
     mapObj.stdscr.addstr(1, mapObj.maxX + 2, 'w: Wall', curses.color_pair(7))
@@ -128,12 +134,8 @@ def main():
 
     while True:
         mapObj.displayMap()
-        # mapObj.printInitLets()
-        # mapObj.printObjLets()
-        # mapObj.stdscr.addstr(mapObj.maxY+3, 0, "y: %s x: %s" % (y, x), curses.color_pair(7))
        
         c = mapObj.stdscr.getch()
-        # c = = mapObj.stdscr.getkey()
         if c == ord('q'):
             break
 
@@ -157,8 +159,6 @@ def main():
 
         else:
             isValid(chr(c), mapObj, y, x) # https://stackoverflow.com/questions/36319228/python-3-4-getch-a-typewriter-python
-            # mapObj.initArr[y][x] = str(c)
-            # mapObj.objArr[y][x] = str(c)
 
         curses.flushinp()
     

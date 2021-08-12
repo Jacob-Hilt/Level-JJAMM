@@ -239,6 +239,8 @@ class Map:
             playObj.sword = False
         elif self.winCond == 'B':
             playObj.bow = False
+        elif self.winCond == 'H':
+            playObj.shurikens = False
         playObj.key -= resKey
         
         self.enemyArr = []
@@ -260,6 +262,8 @@ class Map:
             return playObj.sword
         elif self.winCond == 'B':
             return playObj.bow
+        elif self.winCond == 'H':
+            return playObj.shurikens
         elif self.winCond == 'K':
             if playObj.key > 0:
                 playObj.key -= 1
