@@ -6,6 +6,8 @@
 This repository contains a single player game with various levels for the player to beat. Each level contains obstacles, goals and sometimes enemies. The player will start off without any weapons but as the player progresses they will obtain various weapons. 
 
 ## Build and Run
+Make sure terminal window is at least 120x30
+
 To run the program once it is built, enter
 ./dungeonjjamm
 
