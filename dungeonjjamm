@@ -304,10 +304,6 @@ def game(c, playObj, mapObj, mapArr, fileNum):
 if __name__ == "__main__":
 
 
-    # path = input('input the directory name: ') # TODO: Uncomment this
-    # path = 'levels' #TODO: Comment This.
-
-    
     # path = input('input the directory name: ')
     mode = start_menu()
     if mode == 'Start':
@@ -315,11 +311,11 @@ if __name__ == "__main__":
     elif mode == 'Tutorial':
         path = 'tutorials'
     elif mode == 'Load Custom':
-        path = 'custom'
+        path = 'custom' # TODO: Temporary
     elif mode == 'Quit':
         curses.endwin()
 
-    path = './' + path
+    path = './AllLevels/' + path
     inFile = []
     mapArr = []
 
@@ -335,6 +331,7 @@ if __name__ == "__main__":
         mapArr.append(mapfi.Map())
         playerY, playerX = mapArr[fileNum].loadMap(inFile[fileNum])
         mapArr[fileNum].loadExits()
+        # mapArr[fileNum].printExits()
         mapArr[fileNum].loadEnemy()
         fileNum += 1
 

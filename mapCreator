@@ -22,14 +22,14 @@ def newFile(userPath):
     width = int(width)
     height = int(height)
     stdscr = curses.initscr()
-    if width > curses.COLS - 1 + 50:
-        width = curses.COLS - 1 - 50
+    if width > curses.COLS - 1 + 20:
+        width = curses.COLS - 1 - 20
     if height > curses.LINES - 1:
         height = curses.LINES - 1
     curses.endwin()
     dashes = '-' * width
     dashes += '\n'
-    fi = open(userPath, 'a')
+    fi = open(userPath, 'w')
     for num in range(height):
         fi.write(dashes)
     fi.write('\n')
@@ -82,7 +82,7 @@ def winValid(mapObj):
     return False
 
 def main():
-    userPath = './' + input('input the directory name (ex: levels) or q to quit: ')
+    userPath = './AllLevels/' + input('input the directory name (ex: levels) or q to quit: ')
     while not path.isdir(userPath):
         print('directory ', userPath, ' not found. Please enter an existing directory')
         userPath = input('input the directory name or q to quit: ')
@@ -97,6 +97,11 @@ def main():
     mapObj.setupMap()
     mapObj.stdscr.nodelay(False)
     mapObj.loadMap(userPath)
+    if mapObj.maxX > curses.COLS - 1 - 20 or mapObj.maxY > curses.LINES - 1:
+        curses.endwin()
+        print('This file is too large. Please remake the file.')
+        newFile(userPath)
+        mapObj.loadMap(userPath)
     mapObj.loadExits()
     y = 0
     x = 0

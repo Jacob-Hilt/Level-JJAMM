@@ -55,7 +55,7 @@ def start_menu():
             highlight += 1
             if highlight >= len(options):
                 highlight = 0
-        elif cursor == curses.KEY_ENTER:
+        elif cursor == curses.KEY_ENTER or cursor == 10:
             curses.endwin()
             return options[highlight]
         pad.refresh(0,0,0,0,curses.LINES-1,curses.COLS-1)

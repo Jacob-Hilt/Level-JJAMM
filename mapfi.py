@@ -92,17 +92,17 @@ class Map:
                     ex = x + 1
                     exNum = ''
                     # while self.initArr[y][ex] != 'e' and ex < self.maxX:
-                    while self.initArr[y][ex].isnumeric() and ex < self.maxX:
-
-                        exNum += self.initArr[y][ex]
+                    while self.objArr[y][ex].isnumeric() and ex < self.maxX:
+                        exNum += self.objArr[y][ex]
                         ex += 1
                     if exNum.isnumeric():
                         exNum = int(exNum)
                     x += 1
-                    # while self.objArr[y][x] != 'e' and ex < self.maxX:
-                    while self.initArr[y][x].isnumeric() and x < self.maxX:
-                        self.exitArr[y][x] = exNum
-                        x += 1
+                    # while self.initArr[y][x] != 'e' and x < self.maxX:
+                    if self.objArr[y][ex] == 'e':
+                        while self.objArr[y][x].isnumeric() and x < self.maxX:
+                            self.exitArr[y][x] = exNum
+                            x += 1
                     if self.objArr[y][x] == 'e':
                         self.objArr[y][x] = '-'
                         # self.initArr[y][x] = '-'
