@@ -304,14 +304,14 @@ def game(c, playObj, mapObj, mapArr, fileNum):
 if __name__ == "__main__":
 
 
-    # path = input('input the directory name: ')
     mode = start_menu()
     if mode == 'Start':
         path = 'levels' # Temporary, for testing
     elif mode == 'Tutorial':
         path = 'tutorials'
     elif mode == 'Load Custom':
-        path = 'custom' # TODO: Temporary
+        path = input('input the directory name: ')
+        # path = 'custom' # TODO: Temporary
     elif mode == 'Quit':
         curses.endwin()
 
