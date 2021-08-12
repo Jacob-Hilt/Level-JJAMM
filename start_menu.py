@@ -33,7 +33,7 @@ def start_menu():
     pad.box()
     pad.keypad(True)
 
-    for i in range(len(jjamm)):
+    for i in range(len(jjamm)): #https://www.youtube.com/watch?v=3YiPdibiQHA
         for j in range(len(jjamm[i])):
             if(jjamm[i][j]):
                 pad.addch(i+2, j+2, 'T', curses.color_pair(1))
