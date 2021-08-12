@@ -15,6 +15,7 @@ import player
 import time #found sleep function at https://www.tutorialspoint.com/python3/time_sleep.htm
 import re
 import time
+from endscreen import *
 
 def atoi(text): # copied exactly from: https://stackoverflow.com/questions/5967500/how-to-correctly-sort-a-string-with-a-number-inside
     return int(text) if text.isdigit() else text
@@ -397,6 +398,7 @@ if __name__ == "__main__":
             mapArr[fileNum].stdscr.clear()
             mapArr[fileNum].stdscr.refresh()
             if c == ord('q'):
+                end_screen(mapArr[fileNum].stdscr, playObj, menuObj)
                 break
 
 

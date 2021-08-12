@@ -47,7 +47,7 @@ class Menu:
             pass
 
     #Helper function to return elapsed time for level
-    def get_time():                 
+    def get_time(self):                 
             current_time = round(time.time(), 2)
             return round((current_time - self.start_time), 2)
 
