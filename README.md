@@ -20,4 +20,11 @@ This work is made available under the "MIT License". Please see the file LICENSE
 
 **Week 8:**
  + Ability to insert custom levels
-+ 10 initial rooms for the user to play through including, 4 enemies, 3 weapons, display of total items and marks which item is in use, better start screen
++ 10 initial rooms for the user to play through including, 3 enemies, 3 weapons, display of total items and marks which item is in use, better start screen
+
+## Work Summary
++ Jacob worked on map creation, display and custom level builder
++ Melissa worked on the menu element as well as the end screen
++ Mark worked on player movement
++ Anthony worked on player weapons and interactions between the enemies and weapons
++ Jerry worked on enemy generation, movement and interactions between enemies, player and walls.
