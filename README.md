@@ -31,6 +31,6 @@ This work is made available under the "MIT License". Please see the file LICENSE
 
 ## Screenshots
 ![alt text](https://github.com/JJAMM/Level-JJAMM/blob/main/screenshots/start_menu.JPG?raw=true)
-![alt text](://github.com/JJAMM/Level-JJAMM/blob/main/screenshots/lv1.JPG?raw=true)
+![alt text](//github.com/JJAMM/Level-JJAMM/blob/main/screenshots/lv1.JPG?raw=true)
 ![alt text](https://github.com/JJAMM/Level-JJAMM/blob/main/screenshots/lv3.JPG?raw=true)
 ![alt text](https://github.com/JJAMM/Level-JJAMM/blob/main/screenshots/gameover.JPG?raw=true)
