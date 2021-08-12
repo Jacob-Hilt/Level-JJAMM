@@ -28,3 +28,6 @@ This work is made available under the "MIT License". Please see the file LICENSE
 + Mark worked on player movement and start screen
 + Anthony worked on player weapons and interactions between the enemies and weapons
 + Jerry worked on enemy generation, movement and interactions between enemies, player and walls
+
+## Screenshot
+![alt text](https://github.com/JJAMM/Level-JJAMM/blob/main/start_menu.JPG?raw=true)
