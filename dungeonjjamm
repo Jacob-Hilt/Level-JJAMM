@@ -403,7 +403,8 @@ if __name__ == "__main__":
                 break
 
 
-    if fileNum >= len(inFile): fileNum = 0
+    if fileNum >= len(inFile): 
+        fileNum = 0
     curses.nocbreak()
     mapArr[fileNum].stdscr.keypad(False)
     curses.echo()
