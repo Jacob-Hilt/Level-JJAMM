@@ -3,7 +3,7 @@
 **Joint effort by:** Jerry Smedley, Jacob Hilt, Melissa Barnes, Mark Montes, Anthony Chin
 
 ## Description
-This repository contains a single player game with various levels for the player to beat. Each level contains obstacles, goals and sometimes enemies. The player will start off without any weapons but as the player progresses they will obtain various weapons. 
+This repository contains a single player game with various levels for the player to beat. Each level contains obstacles, goals and sometimes enemies. The player will start off without any weapons but as the player progresses they will obtain various weapons. Beware, each enemy types have a weakness to one weapon, so try and figure out which weapon kills which enemies.
 
 ## Build and Run
 Make sure terminal window is at least 120x30
