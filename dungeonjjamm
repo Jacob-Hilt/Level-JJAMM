@@ -7,7 +7,6 @@
 
 import curses
 from start_menu import *
-#from curses import wrapper
 import os
 import mapfi
 import creature
@@ -283,8 +282,7 @@ def game(c, playObj, mapObj, mapArr, fileNum):
         mapObj.reset(playObj)
 
     elif c == ord('1'):
-        if playObj.get_sword():
-            playObj.swap_equipped('sword')
+        playObj.swap_equipped('sword')
 
     elif c == ord('2'):
         if playObj.get_bow():
@@ -298,8 +296,6 @@ def game(c, playObj, mapObj, mapArr, fileNum):
     menuObj.display_menu(mapObj.maxX+2, playObj, mapObj)
 
     return newMap
-    # mapObj.printInitLets()
-    # mapObj.printObjLets()
 
 
 
@@ -308,12 +304,11 @@ if __name__ == "__main__":
 
     mode = start_menu()
     if mode == 'Start':
-        path = 'levels' # Temporary, for testing
+        path = 'levels'
     elif mode == 'Tutorial':
         path = 'tutorials'
     elif mode == 'Load Custom':
         path = input('input the directory name: ')
-        # path = 'custom' # TODO: Temporary
     elif mode == 'Quit':
         curses.endwin()
 
@@ -333,20 +328,16 @@ if __name__ == "__main__":
         mapArr.append(mapfi.Map())
         playerY, playerX = mapArr[fileNum].loadMap(inFile[fileNum])
         mapArr[fileNum].loadExits()
-        # mapArr[fileNum].printExits()
         mapArr[fileNum].loadEnemy()
         fileNum += 1
 
     fileNum = 0
     while fileNum < len(mapArr):
         mapArr[fileNum].setupMap()
-        # mapArr[fileNum].printObjLets()
-        # print()
         fileNum += 1
 
     fileNum = 0
     newMap = 0
-    # preFile = 0
     menuObj = menu.Menu()
     playObj = player.Player()
     enemyTime = time.time()
@@ -357,13 +348,12 @@ if __name__ == "__main__":
         mapArr[fileNum].displayMap()
         menuObj.display_menu(mapArr[fileNum].maxX+2, playObj, mapArr[fileNum])
         mapArr[fileNum].stdscr.nodelay(False)
-        # mapArr[fileNum].stdscr.addstr(mapArr[fileNum].maxY+1, 0, "Enter 'q' to exit, 'n' for next level", curses.color_pair(7))
         while True:
             c = mapArr[fileNum].stdscr.getch()
 
             if c != -1:
                 mapArr[fileNum].stdscr.nodelay(True)
-                if c == ord('q') or c == ord('n'):
+                if c == ord('q'): # or c == ord('n'): # Dev feature, allowed skipping levels
                     if ((fileNum + 1) < len(inFile)):
                         fileNum += 1
                     else:
@@ -392,24 +382,18 @@ if __name__ == "__main__":
                 fileNum = newMap
                 break
             
-            #print("x: ", playObj.x_pos, "y: ", playObj.y_pos) test to see if map bounds weren't violated.
 
-
-        if c == ord('q') or c == ord('n'):
+        if c == ord('q'): #  or c == ord('n'): # Dev feature, allowed skipping levels
             mapArr[fileNum].stdscr.clear()
             mapArr[fileNum].stdscr.refresh()
-            if c == ord('q'):
-                end_screen(mapArr[fileNum].stdscr, playObj, menuObj)
-                break
+            break
 
 
     if fileNum >= len(inFile): 
         fileNum = 0
+        end_screen(mapArr[fileNum].stdscr, playObj, menuObj)
+
     curses.nocbreak()
     mapArr[fileNum].stdscr.keypad(False)
     curses.echo()
     curses.endwin()
-
-
-    # print('maxY: ', mapArr[fileNum].maxY, '\nmaxX: ', mapArr[fileNum].maxX) # This was a test,
-    # proves that we don't need a getter, we can reference class objects directly

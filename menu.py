@@ -140,6 +140,8 @@ class Menu:
                     stdscr.addstr(begin_y+11, begin_x+1, "Grab the sword!", curses.color_pair(10))
             if mapObj.winCond == 'B':
                     stdscr.addstr(begin_y+11, begin_x+1, "Grab the bow!", curses.color_pair(10))
+            if mapObj.winCond == 'H':
+                    stdscr.addstr(begin_y+11, begin_x+1, "Grab the shuriken!", curses.color_pair(10))
 
     #prints "You died" message if player dies, otherwise counts up to refresh and remove message on menu
     def print_death_message(self, deathNum, stdscr, begin_y, begin_x):

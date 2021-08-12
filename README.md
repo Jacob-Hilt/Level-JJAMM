@@ -6,13 +6,23 @@
 This repository contains a single player game with various levels for the player to beat. Each level contains obstacles, goals and sometimes enemies. The player will start off without any weapons but as the player progresses they will obtain various weapons. Beware, each enemy type have a weakness to one weapon, so try and figure out which weapon kills which enemies.
 
 ## Build and Run
-Make sure terminal window is at least 120x30
+Make sure terminal window is at least 120x30,
+or bigger if you are loading a larger file
+(the file 'c0.txt', for example, is too large
+for a 120 x 30 terminal to run)
 
 To run the program once it is built, enter
 ./dungeonjjamm
 
+To run the level editor once it is built, enter
+./mapCreator
+
 ## License
 This work is made available under the "MIT License". Please see the file LICENSE in this distribution for license terms.
+
+## Acknowledgements
+https://docs.python.org/3/howto/curses.html was regularly referenced for help with using the curses library
+All other sources are referenced inline.
 
 ## Road Map
 **Week 3:**
