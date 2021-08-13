@@ -46,8 +46,9 @@ All other sources are referenced inline.
 ![alt text](https://github.com/JJAMM/Level-JJAMM/blob/main/documents/gameover.JPG)
 
 ## Map Maker Guide
-![alt text](https://github.com/JJAMM/Level-JJAMM/blob/main/documents/mapMakerGuide.pdf)
-![alt text](https://github.com/JJAMM/Level-JJAMM/blob/main/documents/mapMakerGuide.txt)
+[Map Maker Guide in pdf format](https://github.com/JJAMM/Level-JJAMM/blob/main/documents/mapMakerGuide.pdf)
+
+[Map Maker Guide in txt format](https://github.com/JJAMM/Level-JJAMM/blob/main/documents/mapMakerGuide.txt)
 
 ## Demo Video
-![alt text](https://github.com/JJAMM/Level-JJAMM/blob/main/documents/UserGuideLQ.mp4)
+[link to the Demo Video](https://github.com/JJAMM/Level-JJAMM/blob/main/documents/UserGuideLQ.mp4)
