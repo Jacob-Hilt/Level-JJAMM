@@ -40,7 +40,14 @@ All other sources are referenced inline.
 + Jerry worked on enemy generation, movement and interactions between enemies, player and walls
 
 ## Screenshots
-![alt text](https://github.com/JJAMM/Level-JJAMM/blob/main/screenshots/start_menu.JPG?raw=true)
-![alt text](https://github.com/JJAMM/Level-JJAMM/blob/main/screenshots/lv1.JPG?raw=true)
-![alt text](https://github.com/JJAMM/Level-JJAMM/blob/main/screenshots/lv3.JPG?raw=true)
-![alt text](https://github.com/JJAMM/Level-JJAMM/blob/main/screenshots/gameover.JPG?raw=true)
+![alt text](https://github.com/JJAMM/Level-JJAMM/blob/main/documents/start_menu.JPG)
+![alt text](https://github.com/JJAMM/Level-JJAMM/blob/main/documents/lv1.JPG)
+![alt text](https://github.com/JJAMM/Level-JJAMM/blob/main/documents/lv3.JPG)
+![alt text](https://github.com/JJAMM/Level-JJAMM/blob/main/documents/gameover.JPG)
+
+## Map Maker Guide
+![alt text](https://github.com/JJAMM/Level-JJAMM/blob/main/documents/mapMakerGuide.pdf)
+![alt text](https://github.com/JJAMM/Level-JJAMM/blob/main/documents/mapMakerGuide.txt)
+
+## Demo Video
+![alt text](https://github.com/JJAMM/Level-JJAMM/blob/main/documents/UserGuideLQ.mp4)
