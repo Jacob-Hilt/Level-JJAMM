@@ -3,7 +3,7 @@
 **Joint effort by:** Jerry Smedley, Jacob Hilt, Melissa Barnes, Mark Montes, Anthony Chin
 
 ## Description
-This repository contains a single player game with various levels for the player to beat. Each level contains obstacles, goals and sometimes enemies. The player will start off without any weapons but as the player progresses they will obtain various weapons. Beware, each enemy type have a weakness to one weapon, so try and figure out which weapon kills which enemies.
+This repository contains a single player game with various levels for the player to beat. Each level contains obstacles, goals and sometimes enemies. The player will start off without any weapons but as the player progresses they will obtain various weapons. Beware, each enemy type has a weakness to one weapon, so try and figure out which weapon kills which enemies.
 
 ## Build and Run
 Make sure terminal window is at least 120x30,
@@ -26,7 +26,7 @@ All other sources are referenced inline.
 
 ## Road Map
 **Week 3:**
-+ 3 rooms set up and working: Title Screen, room 1, room 2, including 1 weapon, 1 emeny, 2 different objectives, display of Lives and Timer
++ 3 rooms set up and working: Title Screen, room 1, room 2, including 1 weapon, 1 enemy, 2 different objectives, display of Lives and Timer
 
 **Week 8:**
  + Ability to insert custom levels
@@ -40,10 +40,10 @@ All other sources are referenced inline.
 + Jerry worked on enemy generation, movement and interactions between enemies, player and walls
 
 ## Screenshots
-![alt text](https://github.com/JJAMM/Level-JJAMM/blob/main/documents/start_menu.JPG)
-![alt text](https://github.com/JJAMM/Level-JJAMM/blob/main/documents/lv1.JPG)
-![alt text](https://github.com/JJAMM/Level-JJAMM/blob/main/documents/lv3.JPG)
-![alt text](https://github.com/JJAMM/Level-JJAMM/blob/main/documents/gameover.JPG)
+![image of the start menu](https://github.com/JJAMM/Level-JJAMM/blob/main/documents/start_menu.JPG)
+![image of level 1](https://github.com/JJAMM/Level-JJAMM/blob/main/documents/lv1.JPG)
+![image of level 3](https://github.com/JJAMM/Level-JJAMM/blob/main/documents/lv3.JPG)
+![image of game over screen](https://github.com/JJAMM/Level-JJAMM/blob/main/documents/gameover.JPG)
 
 ## Map Maker Guide
 [Map Maker Guide in pdf format](https://github.com/JJAMM/Level-JJAMM/blob/main/documents/mapMakerGuide.pdf)
