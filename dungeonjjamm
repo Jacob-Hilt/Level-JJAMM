@@ -293,14 +293,12 @@ def game(c, playObj, mapObj, mapArr, fileNum):
             playObj.swap_equipped('shurikens')
 
     mapObj.displayMap()
-    menuObj.display_menu(mapObj.maxX+2, playObj, mapObj)
+    # menuObj.display_menu(mapObj.maxX+2, playObj, mapObj)
 
     return newMap
 
 
-
-if __name__ == "__main__":
-
+def main():
 
     mode = start_menu()
     if mode == 'Start':
@@ -311,8 +309,11 @@ if __name__ == "__main__":
         path = input('input the directory name: ')
     elif mode == 'Quit':
         curses.endwin()
+        return
 
     path = './AllLevels/' + path
+    if not os.path.isdir(path):
+        return
     inFile = []
     mapArr = []
 
@@ -361,6 +362,7 @@ if __name__ == "__main__":
                     break
                 else:
                     newMap = game(c, playObj, mapArr[fileNum], mapArr, fileNum)
+                    menuObj.display_menu(mapArr[fileNum].maxX+2, playObj, mapArr[fileNum])
 
 
             #Enemy movement
@@ -397,3 +399,6 @@ if __name__ == "__main__":
     mapArr[fileNum].stdscr.keypad(False)
     curses.echo()
     curses.endwin()
+
+if __name__ == "__main__":
+    main()

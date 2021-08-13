@@ -91,10 +91,12 @@ def winValid(mapObj):
 
 def main():
     userPath = './AllLevels/' + input('input the directory name (ex: levels) or q to quit: ')
+    if userPath == './AllLevels/q': 
+        return
     while not path.isdir(userPath):
         print('directory ', userPath, ' not found. Please enter an existing directory')
-        userPath = input('input the directory name or q to quit: ')
-        if userPath == 'q': 
+        userPath = './AllLevels/' + input('input the directory name or q to quit: ')
+        if userPath == './AllLevels/q': 
             return
 
     fileName = input('Please input the file name (ex: lv0.txt): ')
