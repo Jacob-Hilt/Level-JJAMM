@@ -1,12 +1,15 @@
-#Joint effort by: Jerry Smedley, Jacob Hilt, Melissa Barnes, Mark Montes, Anthony Chin
-#This work is made available under the "MIT License". Please see the file LICENSE in this distribution for license terms.
+# Joint effort by: Jerry Smedley, Jacob Hilt, Melissa Barnes, Mark Montes, Anthony Chin
+# This work is made available under the "MIT License". Please see the file LICENSE in this distribution for license terms.
 
 import curses
 from curses import wrapper
 import creature
-#import os
+
 
 class Map:
+    def __init__(self):
+        self.stdscr = curses.initscr()
+
     initArr = []
     objArr = []
     maxY = 0
@@ -16,11 +19,12 @@ class Map:
     startY = 0
     startX = 0
     enemyArr = []
+
     # stdscr
-    
+
     def printInitLets(self):
         for y in range(self.maxY):
-            #print(y)
+            # print(y)
             for x in range(self.maxX):
                 self.stdscr.addstr(self.maxY + 2 + y, 0 + x, self.objArr[y][x], curses.color_pair(10))
                 # print(self.initArr[y][x], end = '')
@@ -28,7 +32,7 @@ class Map:
 
     def printObjLets(self):
         for y in range(self.maxY):
-            #print(y)
+            # print(y)
             for x in range(self.maxX):
                 self.stdscr.addstr(self.maxY + 2 + y, self.maxX + 3 + x, self.initArr[y][x], curses.color_pair(10))
                 # print(self.objArr[y][x], end = ' ')
@@ -36,12 +40,10 @@ class Map:
 
     def printExits(self):
         for y in range(self.maxY):
-            #print(y)
+            # print(y)
             for x in range(self.maxX):
-                print(self.exitArr[y][x], end = ', ')
+                print(self.exitArr[y][x], end=', ')
             print()
-
-
 
     def loadMap(self, inFile):
         curFile = open(inFile, 'r')
@@ -53,12 +55,21 @@ class Map:
             else:
                 break
         self.maxY += 1
-        self.initArr = [[0 for y in range(self.maxX+1)] for x in range(self.maxY)] # https://stackoverflow.com/questions/2397141/how-to-initialize-a-two-dimensional-array-in-python
-        self.objArr = [[0 for y in range(self.maxX+1)] for x in range(self.maxY)] # https://stackoverflow.com/questions/2397141/how-to-initialize-a-two-dimensional-array-in-python
-        self.exitArr = [[-1 for y in range(self.maxX+1)] for x in range(self.maxY)] # https://stackoverflow.com/questions/2397141/how-to-initialize-a-two-dimensional-array-in-python
+
+        """
+        Next three lines of code were referred from:
+        https://stackoverflow.com/questions/2397141/how-to-initialize-a-two-dimensional-array-in-python
+        https://stackoverflow.com/questions/2397141/how-to-initialize-a-two-dimensional-array-in-python
+        https://stackoverflow.com/questions/2397141/how-to-initialize-a-two-dimensional-array-in-python
+        """
+        self.initArr = [[0 for y in range(self.maxX + 1)] for x in range(self.maxY)]
+        self.objArr = [[0 for y in range(self.maxX + 1)] for x in range(self.maxY)]
+        self.exitArr = [[-1 for y in range(self.maxX + 1)] for x in range(self.maxY)]
         y = 0
         x = 0
-        curFile.seek(0) # https://www.tutorialspoint.com/How-to-use-seek-method-to-reset-a-file-read-write-position-in-Python
+
+        # https://www.tutorialspoint.com/How-to-use-seek-method-to-reset-a-file-read-write-position-in-Python
+        curFile.seek(0)
         for line in curFile:
             x = 0
             if line != '\n':
@@ -79,10 +90,8 @@ class Map:
                 if character != '\n':
                     self.winCond = character
 
-
-
         return self.startY, self.startX
-    
+
     def loadExits(self):
         for y in range(self.maxY):
             for x in range(self.maxX):
@@ -120,7 +129,7 @@ class Map:
                 break
         '''
 
-    #Jerry wrote loadEnemy which is a modified loadMap
+    # Jerry wrote loadEnemy which is a modified loadMap
     # has been updated to no longer reloads map
     def loadEnemy(self):
         enemies = []
@@ -131,12 +140,12 @@ class Map:
                     character = int(character)
                 except ValueError:
                     character = 0
-                if(self.exitArr[y][x] >= 0):
-                     character = 0
+                if self.exitArr[y][x] >= 0:
+                    character = 0
                 if character != 0:
                     enemy = creature.creature()
                     enemy.typ = character
-                    enemy.xpos = x 
+                    enemy.xpos = x
                     enemy.ypos = y
                     enemies.append(enemy)
         self.enemyArr = enemies
@@ -195,9 +204,7 @@ class Map:
         else:
             return ' ', 4
 
-
     def setupMap(self):
-        self.stdscr = curses.initscr()
         self.stdscr.nodelay(True)
         curses.noecho()
         curses.cbreak()
@@ -242,16 +249,16 @@ class Map:
         elif self.winCond == 'H':
             playObj.shurikens = False
         playObj.key -= resKey
-        
+
         self.enemyArr = []
         self.loadEnemy()
-        
+
         self.displayMap()
 
     def winCheck(self, playObj):
         if self.winCond == 'T':
             return True
-        elif self.winCond == 'E': 
+        elif self.winCond == 'E':
             # check if all enemies defeated
             for y in range(self.maxY):
                 for x in range(self.maxX):
