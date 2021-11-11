@@ -2,7 +2,7 @@
 
 # Joint effort by: Jerry Smedley, Jacob Hilt, Melissa Barnes, Mark Montes, Anthony Chin
 # This work is made available under the "MIT License". Please see the file LICENSE in this distribution for license terms.
-# This is our main excutable, this will pull functions from the other files to run all of them here
+# This is our main executable, this will pull functions from the other files to run all of them here
 # *****PLEASE MAKE SURE TERMINAL IS AT LEAST 120x30 SIZE FOR PROPER PERFORMANCE*****
 
 from start_menu import *
@@ -60,15 +60,15 @@ def use_sword(c, playObj, mapObj, mapArr, fileNum):
     if xDes >= mapObj.maxX or xDes < 0 or yDes >= mapObj.maxY or yDes < 0:
         return
     enemyTyp = check_enemy_type(xDes, yDes, mapArr, fileNum)
-    if (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0) or mapObj.objArr[yDes][
-        xDes] == '-' or (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] < 0 and enemyTyp == 1):
+    if (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0) or \
+            mapObj.objArr[yDes][xDes] == '-' or \
+            (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] < 0 and enemyTyp == 1):
         previous = mapObj.objArr[yDes][xDes]
         mapObj.objArr[yDes][xDes] = 's'
         mapObj.displayMap()
         kill_enemy(xDes, yDes, mapArr, fileNum, enemyTyp)
-        if previous == '-' or (
-                previous.isnumeric() and mapObj.exitArr[yDes][xDes] < 0 and check_enemy_type(xDes, yDes, mapArr,
-                                                                                             fileNum) == 1):
+        if previous == '-' or \
+                (previous.isnumeric() and mapObj.exitArr[yDes][xDes] < 0 and check_enemy_type(xDes, yDes, mapArr, fileNum) == 1):
             mapObj.objArr[yDes][xDes] = '-'
             time.sleep(0.2)
             mapObj.displayMap()
@@ -76,6 +76,7 @@ def use_sword(c, playObj, mapObj, mapArr, fileNum):
             mapObj.objArr[yDes][xDes] = mapObj.initArr[yDes][xDes]
             time.sleep(0.2)
             mapObj.displayMap()
+
     curses.flushinp()
 
 
@@ -89,8 +90,8 @@ def use_bow(c, playObj, mapObj, mapArr, fileNum):
         if playObj.x_pos > 0:
             xDes -= 1
             while xDes >= 0:
-                if mapObj.objArr[yDes][xDes] == '-' or (
-                        mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0):
+                if mapObj.objArr[yDes][xDes] == '-' or \
+                        (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0):
                     previous = mapObj.objArr[yDes][xDes]
                     mapObj.objArr[yDes][xDes] = 'b_l_atk'
                     mapObj.displayMap()
@@ -116,8 +117,8 @@ def use_bow(c, playObj, mapObj, mapArr, fileNum):
         if playObj.x_pos < mapObj.maxX - 1:
             xDes += 1
             while xDes <= mapObj.maxX - 1:
-                if mapObj.objArr[yDes][xDes] == '-' or (
-                        mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0):
+                if mapObj.objArr[yDes][xDes] == '-' or \
+                        (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0):
                     previous = mapObj.objArr[yDes][xDes]
                     mapObj.objArr[yDes][xDes] = 'b_r_atk'
                     mapObj.displayMap()
@@ -143,8 +144,8 @@ def use_bow(c, playObj, mapObj, mapArr, fileNum):
         if playObj.y_pos < mapObj.maxY - 1:
             yDes -= 1
             while yDes >= 0:
-                if mapObj.objArr[yDes][xDes] == '-' or (
-                        mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0):
+                if mapObj.objArr[yDes][xDes] == '-' or \
+                        (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0):
                     previous = mapObj.objArr[yDes][xDes]
                     mapObj.objArr[yDes][xDes] = 'b_u_atk'
                     mapObj.displayMap()
@@ -170,8 +171,8 @@ def use_bow(c, playObj, mapObj, mapArr, fileNum):
         if playObj.y_pos > 0:
             yDes += 1
             while yDes <= mapObj.maxY - 1:
-                if mapObj.objArr[yDes][xDes] == '-' or (
-                        mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0):
+                if mapObj.objArr[yDes][xDes] == '-' or \
+                        (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0):
                     previous = mapObj.objArr[yDes][xDes]
                     mapObj.objArr[yDes][xDes] = 'b_d_atk'
                     mapObj.displayMap()
