@@ -1,14 +1,15 @@
 #!/usr/bin/python3
 
-#Joint effort by: Jerry Smedley, Jacob Hilt, Melissa Barnes, Mark Montes, Anthony Chin
-#This work is made available under the "MIT License". Please see the file LICENSE in this distribution for license terms.
-# This is our main excutable, this will pull functions from the other files to run all of them here
-#*****PLEASE MAKE SURE TERMINAL IS AT LEAST 120x30 SIZE FOR PROPER PERFORMANCE****
+# Joint effort by: Jerry Smedley, Jacob Hilt, Melissa Barnes, Mark Montes, Anthony Chin
+# This work is made available under the "MIT License". Please see the file LICENSE in this distribution for license terms.
+# This is our main executable, this will pull functions from the other files to run all of them here
+# *****PLEASE MAKE SURE TERMINAL IS AT LEAST 120x30 SIZE FOR PROPER PERFORMANCE****
 
 import curses
 import os
 from os import path
 import mapfi
+
 
 def newFile(userPath):
     width = input('Enter the width: ')
@@ -41,37 +42,39 @@ def newFile(userPath):
     fi.write('T')
     fi.close()
 
+
 def moveCursor(c, y, x, mapObj):
     mapObj.objArr[y][x] = mapObj.initArr[y][x]
-
     if c == curses.KEY_LEFT:
         if x != 0:
             x -= 1
     elif c == curses.KEY_RIGHT:
-        if x != mapObj.maxX-1:
+        if x != mapObj.maxX - 1:
             x += 1
     elif c == curses.KEY_UP:
         if y != 0:
             y -= 1
     elif c == curses.KEY_DOWN:
-        if y != mapObj.maxY-1:
+        if y != mapObj.maxY - 1:
             y += 1
 
     mapObj.objArr[y][x] = 'c'
     mapObj.displayMap()
     return y, x
 
+
 def isValid(c, mapObj, y, x):
     if c == '-' or c == 'w' or c == 's' \
             or c == 'b' or c == 'h' or \
             c == 'k' or c == 'p' or c.isnumeric() \
             or c.isupper():
-                if mapObj.initArr[y][x] == 'e':
-                    removeE(mapObj, y, x)
-                elif mapObj.initArr[y][x].isnumeric() and (not c.isnumeric()) \
-                        and mapObj.exitArr[y][x] >= 0:
-                            mapObj.exitArr[y][x] = -1
-                mapObj.initArr[y][x] = c
+        if mapObj.initArr[y][x] == 'e':
+            removeE(mapObj, y, x)
+        elif mapObj.initArr[y][x].isnumeric() and (not c.isnumeric()) \
+                and mapObj.exitArr[y][x] >= 0:
+            mapObj.exitArr[y][x] = -1
+        mapObj.initArr[y][x] = c
+
 
 def removeE(mapObj, y, x):
     if x + 1 < mapObj.maxX:
@@ -82,21 +85,23 @@ def removeE(mapObj, y, x):
         if mapObj.initArr[y][x] == 'e':
             mapObj.initArr[y][x] == '-'
 
+
 def winValid(mapObj):
     if mapObj.winCond == 'T' or mapObj.winCond == 'S' \
             or mapObj.winCond == 'E' or mapObj.winCond == 'B' \
             or mapObj.winCond == 'K' or mapObj.winCond == 'H':
-                return True
+        return True
     return False
+
 
 def main():
     userPath = './AllLevels/' + input('input the directory name (ex: levels) or q to quit: ')
-    if userPath == './AllLevels/q': 
+    if userPath == './AllLevels/q':
         return
     while not path.isdir(userPath):
         print('directory ', userPath, ' not found. Please enter an existing directory')
         userPath = './AllLevels/' + input('input the directory name or q to quit: ')
-        if userPath == './AllLevels/q': 
+        if userPath == './AllLevels/q':
             return
 
     fileName = input('Please input the file name (ex: lv0.txt): ')
@@ -131,12 +136,9 @@ def main():
     mapObj.stdscr.addstr(13, mapObj.maxX + 2, 'q: Quit', curses.color_pair(7))
     mapObj.stdscr.addstr(14, mapObj.maxX + 2, 'Uppercase: Text', curses.color_pair(7))
 
-
-
-
     while True:
         mapObj.displayMap()
-       
+
         c = mapObj.stdscr.getch()
         if c == ord('q'):
             break
@@ -145,10 +147,10 @@ def main():
             y, x = moveCursor(c, y, x, mapObj)
 
         elif c == ord('e'):
-            if x < mapObj.maxX-1:
+            if x < mapObj.maxX - 1:
                 if mapObj.initArr[y][x + 1].isnumeric():
                     xDest = x + 1
-                    while xDest < mapObj.maxX-1 and mapObj.initArr[y][xDest].isnumeric():
+                    while xDest < mapObj.maxX - 1 and mapObj.initArr[y][xDest].isnumeric():
                         mapObj.exitArr[y][xDest] = 0
                         xDest += 1
 
@@ -160,10 +162,11 @@ def main():
                     moveCursor(c, y, x, mapObj)
 
         else:
-            isValid(chr(c), mapObj, y, x) # https://stackoverflow.com/questions/36319228/python-3-4-getch-a-typewriter-python
+            # https://stackoverflow.com/questions/36319228/python-3-4-getch-a-typewriter-python
+            isValid(chr(c), mapObj, y, x)
 
         curses.flushinp()
-    
+
     curses.nocbreak()
     mapObj.stdscr.keypad(False)
     curses.echo()
@@ -177,7 +180,7 @@ def main():
         for x in range(mapObj.maxX):
             if mapObj.initArr[y][x] == 'e':
                 if x - 1 >= 0:
-                    if not mapObj.initArr[y][x-1].isnumeric():
+                    if not mapObj.initArr[y][x - 1].isnumeric():
                         ex = x
                         if x + 1 < mapObj.maxX:
                             ex = x + 1
@@ -190,7 +193,7 @@ def main():
                                 ex += 1
                         else:
                             mapObj.initArr[y][x] = '-'
-                    elif mapObj.exitArr[y][x-1] < 0:
+                    elif mapObj.exitArr[y][x - 1] < 0:
                         mapObj.initArr[y][x] = '-'
 
             fi.write(mapObj.initArr[y][x])

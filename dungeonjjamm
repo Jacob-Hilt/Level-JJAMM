@@ -1,27 +1,29 @@
 #!/usr/bin/python3
 
-#Joint effort by: Jerry Smedley, Jacob Hilt, Melissa Barnes, Mark Montes, Anthony Chin
-#This work is made available under the "MIT License". Please see the file LICENSE in this distribution for license terms.
-# This is our main excutable, this will pull functions from the other files to run all of them here
-#*****PLEASE MAKE SURE TERMINAL IS AT LEAST 120x30 SIZE FOR PROPER PERFORMANCE*****
+# Joint effort by: Jerry Smedley, Jacob Hilt, Melissa Barnes, Mark Montes, Anthony Chin
+# This work is made available under the "MIT License". Please see the file LICENSE in this distribution for license terms.
+# This is our main executable, this will pull functions from the other files to run all of them here
+# *****PLEASE MAKE SURE TERMINAL IS AT LEAST 120x30 SIZE FOR PROPER PERFORMANCE*****
 
-import curses
 from start_menu import *
 import os
 import mapfi
-import creature
 import menu
 import player
-import time #found sleep function at https://www.tutorialspoint.com/python3/time_sleep.htm
 import re
 import time
 from endscreen import *
 
-def atoi(text): # copied exactly from: https://stackoverflow.com/questions/5967500/how-to-correctly-sort-a-string-with-a-number-inside
+
+# copied exactly from: https://stackoverflow.com/questions/5967500/how-to-correctly-sort-a-string-with-a-number-inside
+def atoi(text):
     return int(text) if text.isdigit() else text
 
-def natural_keys(text): # copied exactly from: https://stackoverflow.com/questions/5967500/how-to-correctly-sort-a-string-with-a-number-inside
-    return [ atoi(c) for c in re.split(r'(\d+)', text) ]
+
+# copied exactly from: https://stackoverflow.com/questions/5967500/how-to-correctly-sort-a-string-with-a-number-inside
+def natural_keys(text):
+    return [atoi(c) for c in re.split(r'(\d+)', text)]
+
 
 def check_enemy_type(xPos, yPos, mapArr, fileNum):
     for enemy in mapArr[fileNum].enemyArr:
@@ -29,15 +31,16 @@ def check_enemy_type(xPos, yPos, mapArr, fileNum):
             return enemy.typ
     return -1
 
+
 def kill_enemy(xPos, yPos, mapArr, fileNum, enemyType):
     for enemy in mapArr[fileNum].enemyArr:
-         if enemy.xpos == xPos and enemy.ypos == yPos and enemy.typ == enemyType:
+        if enemy.xpos == xPos and enemy.ypos == yPos and enemy.typ == enemyType:
             enemy.dead()
 
 
 def use_sword(c, playObj, mapObj, mapArr, fileNum):
-    if playObj.get_sword() == False:
-        #display 'no sword' message in menu
+    if not playObj.get_sword():
+        # display 'no sword' message in menu
         return
     xDes = playObj.x_pos
     yDes = playObj.y_pos
@@ -57,12 +60,15 @@ def use_sword(c, playObj, mapObj, mapArr, fileNum):
     if xDes >= mapObj.maxX or xDes < 0 or yDes >= mapObj.maxY or yDes < 0:
         return
     enemyTyp = check_enemy_type(xDes, yDes, mapArr, fileNum)
-    if (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0) or mapObj.objArr[yDes][xDes] == '-' or (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] < 0 and enemyTyp == 1):
-        previous =  mapObj.objArr[yDes][xDes]
+    if (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0) or \
+            mapObj.objArr[yDes][xDes] == '-' or \
+            (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] < 0 and enemyTyp == 1):
+        previous = mapObj.objArr[yDes][xDes]
         mapObj.objArr[yDes][xDes] = 's'
         mapObj.displayMap()
         kill_enemy(xDes, yDes, mapArr, fileNum, enemyTyp)
-        if previous == '-' or (previous.isnumeric() and mapObj.exitArr[yDes][xDes] < 0 and check_enemy_type(xDes, yDes, mapArr, fileNum) == 1):
+        if previous == '-' or \
+                (previous.isnumeric() and mapObj.exitArr[yDes][xDes] < 0 and check_enemy_type(xDes, yDes, mapArr, fileNum) == 1):
             mapObj.objArr[yDes][xDes] = '-'
             time.sleep(0.2)
             mapObj.displayMap()
@@ -70,20 +76,22 @@ def use_sword(c, playObj, mapObj, mapArr, fileNum):
             mapObj.objArr[yDes][xDes] = mapObj.initArr[yDes][xDes]
             time.sleep(0.2)
             mapObj.displayMap()
+
     curses.flushinp()
 
 
 def use_bow(c, playObj, mapObj, mapArr, fileNum):
-    if playObj.get_bow() == False:
-        #display 'no bow' message in menu
+    if not playObj.get_bow():
+        # display 'no bow' message in menu
         return
     xDes = playObj.x_pos
     yDes = playObj.y_pos
     if c == curses.KEY_LEFT:
-        if  playObj.x_pos > 0:
+        if playObj.x_pos > 0:
             xDes -= 1
             while xDes >= 0:
-                if mapObj.objArr[yDes][xDes] == '-' or (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0):
+                if mapObj.objArr[yDes][xDes] == '-' or \
+                        (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0):
                     previous = mapObj.objArr[yDes][xDes]
                     mapObj.objArr[yDes][xDes] = 'b_l_atk'
                     mapObj.displayMap()
@@ -91,7 +99,7 @@ def use_bow(c, playObj, mapObj, mapArr, fileNum):
                     mapObj.stdscr.refresh()
                     time.sleep(0.1)
                     mapObj.displayMap()
-                    xDes-=1
+                    xDes -= 1
                 else:
                     if mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] < 0:
                         enemyType = check_enemy_type(xDes, yDes, mapArr, fileNum)
@@ -109,7 +117,8 @@ def use_bow(c, playObj, mapObj, mapArr, fileNum):
         if playObj.x_pos < mapObj.maxX - 1:
             xDes += 1
             while xDes <= mapObj.maxX - 1:
-                if mapObj.objArr[yDes][xDes] == '-' or (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0):
+                if mapObj.objArr[yDes][xDes] == '-' or \
+                        (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0):
                     previous = mapObj.objArr[yDes][xDes]
                     mapObj.objArr[yDes][xDes] = 'b_r_atk'
                     mapObj.displayMap()
@@ -135,7 +144,8 @@ def use_bow(c, playObj, mapObj, mapArr, fileNum):
         if playObj.y_pos < mapObj.maxY - 1:
             yDes -= 1
             while yDes >= 0:
-                if mapObj.objArr[yDes][xDes] == '-' or (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0):
+                if mapObj.objArr[yDes][xDes] == '-' or \
+                        (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0):
                     previous = mapObj.objArr[yDes][xDes]
                     mapObj.objArr[yDes][xDes] = 'b_u_atk'
                     mapObj.displayMap()
@@ -161,7 +171,8 @@ def use_bow(c, playObj, mapObj, mapArr, fileNum):
         if playObj.y_pos > 0:
             yDes += 1
             while yDes <= mapObj.maxY - 1:
-                if mapObj.objArr[yDes][xDes] == '-' or (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0):
+                if mapObj.objArr[yDes][xDes] == '-' or \
+                        (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0):
                     previous = mapObj.objArr[yDes][xDes]
                     mapObj.objArr[yDes][xDes] = 'b_d_atk'
                     mapObj.displayMap()
@@ -184,36 +195,45 @@ def use_bow(c, playObj, mapObj, mapArr, fileNum):
                     break
     curses.flushinp()
 
+
 def use_shurikens(playObj, mapObj, mapArr, fileNum):
-    if playObj.get_shurikens() == False:
+    if not playObj.get_shurikens():
         return
     xDes = playObj.x_pos
     yDes = playObj.y_pos
 
     if (xDes - 1) >= 0 and (yDes + 1) <= mapObj.maxY - 1:
         enemyType = check_enemy_type(xDes - 1, yDes + 1, mapArr, fileNum)
-        if mapObj.objArr[yDes + 1][xDes - 1] == '-' or (mapObj.objArr[yDes + 1][xDes - 1].isnumeric() and mapObj.exitArr[yDes + 1][xDes - 1] >= 0) or (mapObj.objArr[yDes + 1][xDes - 1].isnumeric() and mapObj.exitArr[yDes + 1][xDes - 1] < 0 and enemyType == 3):
+        if mapObj.objArr[yDes + 1][xDes - 1] == '-' or \
+                (mapObj.objArr[yDes + 1][xDes - 1].isnumeric() and mapObj.exitArr[yDes + 1][xDes - 1] >= 0) or \
+                (mapObj.objArr[yDes + 1][xDes - 1].isnumeric() and mapObj.exitArr[yDes + 1][xDes - 1] < 0 and enemyType == 3):
             kill_enemy(xDes - 1, yDes + 1, mapArr, fileNum, enemyType)
             previous_bl = mapObj.objArr[yDes + 1][xDes - 1]
             mapObj.objArr[yDes + 1][xDes - 1] = 'sh_atk'
 
     if (xDes - 1) >= 0 and (yDes - 1) >= 0:
         enemyType = check_enemy_type(xDes - 1, yDes - 1, mapArr, fileNum)
-        if mapObj.objArr[yDes - 1][xDes - 1] == '-' or (mapObj.objArr[yDes - 1][xDes - 1].isnumeric() and mapObj.exitArr[yDes - 1][xDes - 1] >= 0) or (mapObj.objArr[yDes - 1][xDes - 1].isnumeric() and mapObj.exitArr[yDes - 1][xDes - 1] < 0 and enemyType == 3):
+        if mapObj.objArr[yDes - 1][xDes - 1] == '-' or \
+                (mapObj.objArr[yDes - 1][xDes - 1].isnumeric() and mapObj.exitArr[yDes - 1][xDes - 1] >= 0) or \
+                (mapObj.objArr[yDes - 1][xDes - 1].isnumeric() and mapObj.exitArr[yDes - 1][xDes - 1] < 0 and enemyType == 3):
             kill_enemy(xDes - 1, yDes - 1, mapArr, fileNum, enemyType)
             previous_ul = mapObj.objArr[yDes - 1][xDes - 1]
             mapObj.objArr[yDes - 1][xDes - 1] = 'sh_atk'
 
     if (xDes + 1) <= mapObj.maxX - 1 and (yDes + 1) <= mapObj.maxY - 1:
         enemyType = check_enemy_type(xDes + 1, yDes + 1, mapArr, fileNum)
-        if mapObj.objArr[yDes + 1][xDes + 1] == '-' or (mapObj.objArr[yDes + 1][xDes + 1].isnumeric() and mapObj.exitArr[yDes + 1][xDes + 1] >= 0) or (mapObj.objArr[yDes + 1][xDes + 1].isnumeric() and mapObj.exitArr[yDes + 1][xDes + 1] < 0 and enemyType == 3):
+        if mapObj.objArr[yDes + 1][xDes + 1] == '-' or \
+                (mapObj.objArr[yDes + 1][xDes + 1].isnumeric() and mapObj.exitArr[yDes + 1][xDes + 1] >= 0) or \
+                (mapObj.objArr[yDes + 1][xDes + 1].isnumeric() and mapObj.exitArr[yDes + 1][xDes + 1] < 0 and enemyType == 3):
             kill_enemy(xDes + 1, yDes + 1, mapArr, fileNum, enemyType)
-            previous_br = mapObj.objArr[yDes + 1][xDes + 1] 
+            previous_br = mapObj.objArr[yDes + 1][xDes + 1]
             mapObj.objArr[yDes + 1][xDes + 1] = 'sh_atk'
 
     if (xDes + 1) <= mapObj.maxX - 1 and (yDes - 1) >= 0:
         enemyType = check_enemy_type(xDes + 1, yDes - 1, mapArr, fileNum)
-        if mapObj.objArr[yDes - 1][xDes + 1] == '-' or (mapObj.objArr[yDes - 1][xDes + 1].isnumeric() and mapObj.exitArr[yDes - 1][xDes + 1] >= 0) or (mapObj.objArr[yDes - 1][xDes + 1].isnumeric() and mapObj.exitArr[yDes - 1][xDes + 1] < 0 and enemyType == 3):
+        if mapObj.objArr[yDes - 1][xDes + 1] == '-' or \
+                (mapObj.objArr[yDes - 1][xDes + 1].isnumeric() and mapObj.exitArr[yDes - 1][xDes + 1] >= 0) or \
+                (mapObj.objArr[yDes - 1][xDes + 1].isnumeric() and mapObj.exitArr[yDes - 1][xDes + 1] < 0 and enemyType == 3):
             kill_enemy(xDes + 1, yDes - 1, mapArr, fileNum, enemyType)
             previous_ur = mapObj.objArr[yDes - 1][xDes + 1]
             mapObj.objArr[yDes - 1][xDes + 1] = 'sh_atk'
@@ -253,16 +273,14 @@ def use_shurikens(playObj, mapObj, mapArr, fileNum):
     curses.flushinp()
 
 
-
 def game(c, playObj, mapObj, mapArr, fileNum):
-
     newMap = None
     if c == ord('w'):
         newMap = playObj.move('w', mapObj, fileNum)
 
     elif c == ord('a'):
         newMap = playObj.move('a', mapObj, fileNum)
-    
+
     elif c == ord('s'):
         newMap = playObj.move('s', mapObj, fileNum)
 
@@ -299,7 +317,6 @@ def game(c, playObj, mapObj, mapArr, fileNum):
 
 
 def main():
-
     mode = start_menu()
     if mode == 'Start':
         path = 'levels'
@@ -317,7 +334,8 @@ def main():
     inFile = []
     mapArr = []
 
-    for root, directories, files in os.walk(path, topdown=False): # https://careerkarma.com/blog/python-list-files-in-directory/
+    # https://careerkarma.com/blog/python-list-files-in-directory/
+    for root, directories, files in os.walk(path, topdown=False):
         for name in files:
             inFile.append(os.path.join(root, name))
         for name in directories:
@@ -343,38 +361,37 @@ def main():
     playObj = player.Player()
     enemyTime = time.time()
 
-    while fileNum >= 0 and fileNum < len(inFile):
+    while 0 <= fileNum < len(inFile):
         playObj.y_pos = mapArr[fileNum].startY
         playObj.x_pos = mapArr[fileNum].startX
         mapArr[fileNum].displayMap()
-        menuObj.display_menu(mapArr[fileNum].maxX+2, playObj, mapArr[fileNum])
+        menuObj.display_menu(mapArr[fileNum].maxX + 2, playObj, mapArr[fileNum])
         mapArr[fileNum].stdscr.nodelay(False)
         while True:
             c = mapArr[fileNum].stdscr.getch()
 
             if c != -1:
                 mapArr[fileNum].stdscr.nodelay(True)
-                if c == ord('q'): # or c == ord('n'): # Dev feature, allowed skipping levels
-                    if ((fileNum + 1) < len(inFile)):
+                if c == ord('q'):  # or c == ord('n'): # Dev feature, allowed skipping levels
+                    if (fileNum + 1) < len(inFile):
                         fileNum += 1
                     else:
                         fileNum = -1
                     break
                 else:
                     newMap = game(c, playObj, mapArr[fileNum], mapArr, fileNum)
-                    menuObj.display_menu(mapArr[fileNum].maxX+2, playObj, mapArr[fileNum])
+                    menuObj.display_menu(mapArr[fileNum].maxX + 2, playObj, mapArr[fileNum])
 
-
-            #Enemy movement
+            # Enemy movement
             currTime = time.time()
             if currTime - enemyTime >= 2:
                 for enemy in mapArr[fileNum].enemyArr:
                     check = enemy.movement(mapArr[fileNum])
-                    if(check[0] == 2):
+                    if check[0] == 2:
                         mapArr[fileNum].reset(playObj)
                 enemyTime = time.time()
                 mapArr[fileNum].displayMap()
-                menuObj.display_menu(mapArr[fileNum].maxX+2, playObj, mapArr[fileNum])
+                menuObj.display_menu(mapArr[fileNum].maxX + 2, playObj, mapArr[fileNum])
 
             # https://stackoverflow.com/questions/2259228/how-are-booleans-formatted-in-strings-in-python
             if isinstance(newMap, int):
@@ -383,15 +400,13 @@ def main():
                 mapArr[fileNum].stdscr.clear()
                 fileNum = newMap
                 break
-            
 
-        if c == ord('q'): #  or c == ord('n'): # Dev feature, allowed skipping levels
+        if c == ord('q'):  # or c == ord('n'): # Dev feature, allowed skipping levels
             mapArr[fileNum].stdscr.clear()
             mapArr[fileNum].stdscr.refresh()
             break
 
-
-    if fileNum >= len(inFile): 
+    if fileNum >= len(inFile):
         fileNum = 0
         end_screen(mapArr[fileNum].stdscr, playObj, menuObj)
 
@@ -399,6 +414,7 @@ def main():
     mapArr[fileNum].stdscr.keypad(False)
     curses.echo()
     curses.endwin()
+
 
 if __name__ == "__main__":
     main()

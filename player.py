@@ -1,7 +1,9 @@
-#Joint effort by: Jerry Smedley, Jacob Hilt, Melissa Barnes, Mark Montes, Anthony Chin
-#This work is made available under the "MIT License". Please see the file LICENSE in this distribution for license terms.
+# Joint effort by: Jerry Smedley, Jacob Hilt, Melissa Barnes, Mark Montes, Anthony Chin
+# This work is made available under the "MIT License". Please see the file LICENSE in this distribution for license terms.
 
-import time #found sleep function at https://www.tutorialspoint.com/python3/time_sleep.htm
+# found sleep function at https://www.tutorialspoint.com/python3/time_sleep.htm
+import time
+
 
 class Player:
     inventory = []
@@ -17,42 +19,42 @@ class Player:
         self.deaths = 0
         self.equipped = None
 
-    #check inventory for sword
+    # check inventory for sword
     def get_sword(self):
         return self.sword
 
-    #insert sword into inventory
+    # insert sword into inventory
     def set_sword(self):
         self.sword = True
         self.equipped = 'sword'
 
-    #check inventory for bow
+    # check inventory for bow
     def get_bow(self):
         return self.bow
 
-    #insert bow into inventory
+    # insert bow into inventory
     def set_bow(self):
         self.bow = True
         self.equipped = 'bow'
 
-    #check inveentory for shurikens
+    # check inventory for shurikens
     def get_shurikens(self):
         return self.shurikens
 
-    #insert shurikens into inventory
+    # insert shurikens into inventory
     def set_shurikens(self):
         self.shurikens = True
         self.equipped = 'shurikens'
 
-    #check for equipped item
+    # check for equipped item
     def get_equipped(self):
         return self.equipped
 
-    #swap equipped item
+    # swap equipped item
     def swap_equipped(self, swap):
         self.equipped = swap
 
-    #check for enemy in destination cell
+    # check for enemy in destination cell
     def enemy_there(self, mapObj, desy, desx):
         if mapObj.objArr[desy][desx].isnumeric() and mapObj.exitArr[desy][desx] < 0:
             # print('you died')
@@ -61,7 +63,7 @@ class Player:
         else:
             return False
 
-    #check for item in destination cell
+    # check for item in destination cell
     def item_there(self, dest):
         if dest == 's':
             self.set_sword()
@@ -83,34 +85,32 @@ class Player:
         desy = 0
         # moving up
         if keystroke == 'w':
-            desy = self.y_pos-1
+            desy = self.y_pos - 1
             desx = self.x_pos
 
-        #moving left
+        # moving left
         elif keystroke == 'a':
             desy = self.y_pos
-            desx = self.x_pos-1
+            desx = self.x_pos - 1
 
         # moving down
         elif keystroke == 's':
-            desy = self.y_pos+1
+            desy = self.y_pos + 1
             desx = self.x_pos
 
-        #moving right
+        # moving right
         elif keystroke == 'd':
             desy = self.y_pos
-            desx = self.x_pos+1
+            desx = self.x_pos + 1
 
-        
-
-        #check for out of bounds movement
+        # check for out of bounds movement
         if desx >= mapObj.maxX or desx < 0 or desy >= mapObj.maxY or desy < 0:
             return
-            
+
         dest = mapObj.objArr[desy][desx]
 
         if dest == 'w' or dest.isupper():
-             return
+            return
         elif self.enemy_there(mapObj, desy, desx):
             # print('You died') # If we include quotes like this,
             # we'll want to print them at a specific location in
@@ -127,9 +127,8 @@ class Player:
             print()
             # print('You picked up the item!')
 
-
-
-        elif mapObj.exitArr[desy][desx] >= 0: #Previously:  elif dest == 'e'
+        # Previously:  elif dest == 'e'
+        elif mapObj.exitArr[desy][desx] >= 0:
             '''
             if mapObj.exitArr[desy][desx] < fileNum:
                 for y in range(mapObj.maxY):
@@ -178,10 +177,7 @@ class Player:
                 return -1
         '''
 
-
-                        
-
-        #updates objArr for map
+        # updates objArr for map
         mapObj.objArr[desy][desx] = 'p'
         if mapObj.exitArr[self.y_pos][self.x_pos] < 0:
             mapObj.objArr[self.y_pos][self.x_pos] = '-'
@@ -189,6 +185,5 @@ class Player:
             mapObj.objArr[self.y_pos][self.x_pos] = mapObj.initArr[self.y_pos][self.x_pos]
         self.x_pos = desx
         self.y_pos = desy
-
 
         mapObj.displayMap()
