@@ -5,14 +5,14 @@
 # This is our main executable, this will pull functions from the other files to run all of them here
 # *****PLEASE MAKE SURE TERMINAL IS AT LEAST 120x30 SIZE FOR PROPER PERFORMANCE*****
 
-from start_menu import *
+from src.start_menu import *
 import os
-import mapfi
-import menu
-import player
+import src.mapfi
+import src.menu
+import src.player
 import re
 import time
-from endscreen import *
+from src.endscreen import *
 
 
 # copied exactly from: https://stackoverflow.com/questions/5967500/how-to-correctly-sort-a-string-with-a-number-inside
@@ -328,7 +328,7 @@ def main():
         curses.endwin()
         return
 
-    path = './AllLevels/' + path
+    path = './src/AllLevels/' + path
     if not os.path.isdir(path):
         return
     inFile = []
@@ -344,7 +344,7 @@ def main():
 
     fileNum = 0
     while fileNum < len(inFile):
-        mapArr.append(mapfi.Map())
+        mapArr.append(src.mapfi.Map())
         playerY, playerX = mapArr[fileNum].loadMap(inFile[fileNum])
         mapArr[fileNum].loadExits()
         mapArr[fileNum].loadEnemy()
@@ -357,8 +357,8 @@ def main():
 
     fileNum = 0
     newMap = 0
-    menuObj = menu.Menu()
-    playObj = player.Player()
+    menuObj = src.menu.Menu()
+    playObj = src.player.Player()
     enemyTime = time.time()
 
     while 0 <= fileNum < len(inFile):
