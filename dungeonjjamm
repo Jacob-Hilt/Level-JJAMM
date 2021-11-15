@@ -13,9 +13,10 @@ import src.player
 from src.nonClassFuncs import *
 import time
 from src.endscreen import *
+from curses import wrapper
 
 
-def main():
+def main(stdscr):
     mode = start_menu()
     if mode == 'Start':
         path = 'levels'
@@ -116,4 +117,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    wrapper(main)
