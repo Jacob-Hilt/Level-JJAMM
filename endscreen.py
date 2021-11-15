@@ -27,7 +27,7 @@ def end_screen(stdscr, playObj, menuObj):
                 pad.addch(i + 2, j + 2, 'T', curses.color_pair(1))
 
     # read gameOver welcome screen from eternal file
-    with open("visuals/gameOver.txt.txt") as textFile:
+    with open("visuals/gameOver.txt") as textFile:
         gameOver = [list(map(int, line.split(','))) for line in textFile]
 
     for i in range(len(gameOver)):
