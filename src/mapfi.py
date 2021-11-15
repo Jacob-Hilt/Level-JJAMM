@@ -3,7 +3,7 @@
 
 import curses
 from curses import wrapper
-import creature
+import src.creature
 
 
 class Map:
@@ -143,7 +143,7 @@ class Map:
                 if self.exitArr[y][x] >= 0:
                     character = 0
                 if character != 0:
-                    enemy = creature.creature()
+                    enemy = src.creature.creature()
                     enemy.typ = character
                     enemy.xpos = x
                     enemy.ypos = y

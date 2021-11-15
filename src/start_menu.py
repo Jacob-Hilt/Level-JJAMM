@@ -14,7 +14,7 @@ def start_menu():
     highlight = 0
 
     # read jjamm welcome screen from eternal file
-    with open("visuals/jjamm.txt") as textFile:
+    with open("src/visuals/jjamm.txt") as textFile:
         jjamm = [list(map(int, line.split(','))) for line in textFile]
 
     pad = curses.newpad(curses.LINES - 1, curses.COLS - 1)

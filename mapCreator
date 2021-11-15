@@ -8,7 +8,7 @@
 import curses
 import os
 from os import path
-import mapfi
+import src.mapfi
 
 
 def newFile(userPath):
@@ -95,20 +95,20 @@ def winValid(mapObj):
 
 
 def main():
-    userPath = './AllLevels/' + input('input the directory name (ex: levels) or q to quit: ')
-    if userPath == './AllLevels/q':
+    userPath = './src/AllLevels/' + input('input the directory name (ex: levels) or q to quit: ')
+    if userPath == './src/AllLevels/q':
         return
     while not path.isdir(userPath):
         print('directory ', userPath, ' not found. Please enter an existing directory')
-        userPath = './AllLevels/' + input('input the directory name or q to quit: ')
-        if userPath == './AllLevels/q':
+        userPath = './src/AllLevels/' + input('input the directory name or q to quit: ')
+        if userPath == './src/AllLevels/q':
             return
 
     fileName = input('Please input the file name (ex: lv0.txt): ')
     userPath += '/' + fileName
     if not path.exists(userPath):
         newFile(userPath)
-    mapObj = mapfi.Map()
+    mapObj = src.mapfi.Map()
     mapObj.setupMap()
     mapObj.stdscr.nodelay(False)
     mapObj.loadMap(userPath)

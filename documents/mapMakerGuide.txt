@@ -10,7 +10,7 @@ Choosing 'Quit' will end the program.
 
 
 Another program is included in the download which allows you to create your own maps. Before running this, it is suggested that you create your own directory in which to house the levels, unless you would like to make changes to the included level packs. To do this, from the folder containing the dungeonjjamm program, type
-cd AllLevels
+cd src/AllLevels
 Then make your own directory, naming it whatever you wish. For example, to create a directory titled 'myLevels' type
 mkdir myLevels
 Then, return to the previous directory. From here, you can run the mapCreator program by typing
