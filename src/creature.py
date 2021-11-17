@@ -22,10 +22,12 @@ class creature:
 
         # moves along the x pos
         if self.typ == 2:
+            print("TEST TEST2")
             return needToReNameMap(self, mapObj, self.typ)
 
         # moves along the y pos
         if self.typ == 3:
+            print("TEST TEST3")
             return needToReNameMap(self, mapObj, self.typ)
         return [1, mapObj]
 
