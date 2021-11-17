@@ -227,7 +227,7 @@ def needToReNameShurikens(mapObj, xDes, yDes, mapArr, fileNum):
         kill_enemy(xDes, yDes , mapArr, fileNum, enemyType)
         previous_bl = mapObj.objArr[yDes ][xDes ]
         mapObj.objArr[yDes][xDes ] = 'sh_atk'
-	return previous_bl
+    return previous_bl
     curses.flushinp()
 
 def needToReName2Shurikens(mapObj, xDes, yDes, previous):
