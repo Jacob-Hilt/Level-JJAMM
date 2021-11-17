@@ -82,7 +82,7 @@ def use_bow(c, playObj, mapObj, mapArr, fileNum):
         if playObj.x_pos > 0:
             xDes -= 1
             while xDes >= 0:
-                checkBreak = directionCondition(c, mapObj, xDes, yDes, mapArr, fileNum)
+                checkBreak = directionConditionBow(c, mapObj, xDes, yDes, mapArr, fileNum)
                 if checkBreak == 0:
                     break
 
@@ -90,7 +90,7 @@ def use_bow(c, playObj, mapObj, mapArr, fileNum):
         if playObj.x_pos < mapObj.maxX - 1:
             xDes += 1
             while xDes <= mapObj.maxX - 1:
-                checkBreak = directionCondition(c, mapObj, xDes, yDes, mapArr, fileNum)
+                checkBreak = directionConditionBow(c, mapObj, xDes, yDes, mapArr, fileNum)
                 if checkBreak == 0:
                     break
 
@@ -98,7 +98,7 @@ def use_bow(c, playObj, mapObj, mapArr, fileNum):
         if playObj.y_pos < mapObj.maxY - 1:
             yDes -= 1
             while yDes >= 0:
-                checkBreak = directionCondition(c, mapObj, xDes, yDes, mapArr, fileNum)
+                checkBreak = directionConditionBow(c, mapObj, xDes, yDes, mapArr, fileNum)
                 if checkBreak == 0:
                     break
 
@@ -106,7 +106,7 @@ def use_bow(c, playObj, mapObj, mapArr, fileNum):
         if playObj.y_pos > 0:
             yDes += 1
             while yDes <= mapObj.maxY - 1:
-                checkBreak = directionCondition(c, mapObj, xDes, yDes, mapArr, fileNum)
+                checkBreak = directionConditionBow(c, mapObj, xDes, yDes, mapArr, fileNum)
                 if checkBreak == 0:
                     break
     curses.flushinp()
@@ -188,7 +188,7 @@ def game(c, playObj, mapObj, mapArr, fileNum):
     return newMap
 
 
-def directionCondition(c, mapObj, xDes, yDes, mapArr, fileNum):
+def directionConditionBow(c, mapObj, xDes, yDes, mapArr, fileNum):
     if c == curses.KEY_LEFT:
         direction = 'b_l_atk' 
         sign = -1
