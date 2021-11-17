@@ -83,7 +83,7 @@ def use_bow(c, playObj, mapObj, mapArr, fileNum):
             sign = -1
             xDes = xDes + sign
             while xDes >= 0:
-                checkBreak,xDes,yDes = directionConditionBow(mapObj, xDes, yDes, mapArr, fileNum, "b_l_atk", sign)
+                checkBreak,xDes,yDes = arrowDirectionBow(mapObj, xDes, yDes, mapArr, fileNum, "b_l_atk", sign)
                 if checkBreak == 0:
                     break
 
@@ -92,7 +92,7 @@ def use_bow(c, playObj, mapObj, mapArr, fileNum):
             sign = 1
             xDes = xDes + sign
             while xDes <= mapObj.maxX - 1:
-                checkBreak,xDes,yDes = directionConditionBow(mapObj, xDes, yDes, mapArr, fileNum, "b_r_atk", sign)
+                checkBreak,xDes,yDes = arrowDirectionBow(mapObj, xDes, yDes, mapArr, fileNum, "b_r_atk", sign)
                 if checkBreak == 0:
                     break
 
@@ -101,7 +101,7 @@ def use_bow(c, playObj, mapObj, mapArr, fileNum):
             sign = -1
             yDes = yDes + sign
             while yDes >= 0:
-                checkBreak,xDes,yDes = directionConditionBow(mapObj, xDes, yDes, mapArr, fileNum, "b_u_atk", sign)
+                checkBreak,xDes,yDes = arrowDirectionBow(mapObj, xDes, yDes, mapArr, fileNum, "b_u_atk", sign)
                 if checkBreak == 0:
                     break
 
@@ -110,7 +110,7 @@ def use_bow(c, playObj, mapObj, mapArr, fileNum):
             sign = +1
             yDes = yDes + sign
             while yDes <= mapObj.maxY - 1:
-                checkBreak,xDes,yDes = directionConditionBow(mapObj, xDes, yDes, mapArr, fileNum, "b_d_atk", sign)
+                checkBreak,xDes,yDes = arrowDirectionBow(mapObj, xDes, yDes, mapArr, fileNum, "b_d_atk", sign)
                 if checkBreak == 0:
                     break
     curses.flushinp()
@@ -125,24 +125,24 @@ def use_shurikens(playObj, mapObj, mapArr, fileNum):
     yDes = playObj.y_pos
 
     if (xDes - 1) >= 0 and (yDes + 1) <= mapObj.maxY - 1:
-        previous = needToReNameShurikens(mapObj, xDes - 1, yDes + 1, mapArr, fileNum)
+        previous = checkAttackHitShurikens(mapObj, xDes - 1, yDes + 1, mapArr, fileNum)
     if (xDes - 1) >= 0 and (yDes - 1) >= 0:
-        previous = needToReNameShurikens(mapObj, xDes - 1, yDes - 1, mapArr, fileNum)
+        previous = checkAttackHitShurikens(mapObj, xDes - 1, yDes - 1, mapArr, fileNum)
     if (xDes + 1) <= mapObj.maxX - 1 and (yDes + 1) <= mapObj.maxY - 1:
-        previous = needToReNameShurikens(mapObj, xDes + 1, yDes + 1, mapArr, fileNum)
+        previous = checkAttackHitShurikens(mapObj, xDes + 1, yDes + 1, mapArr, fileNum)
     if (xDes + 1) <= mapObj.maxX - 1 and (yDes - 1) >= 0:
-        previous = needToReNameShurikens(mapObj, xDes + 1, yDes - 1, mapArr, fileNum)
+        previous = checkAttackHitShurikens(mapObj, xDes + 1, yDes - 1, mapArr, fileNum)
 
     mapObj.displayMap()
 
     if (xDes - 1) >= 0 and (yDes + 1) <= mapObj.maxY - 1:
-        needToReName2Shurikens(mapObj, xDes - 1, yDes + 1, previous)
+        clearFieldShurikens(mapObj, xDes - 1, yDes + 1, previous)
     if (xDes - 1) >= 0 and (yDes - 1) >= 0:
-        needToReName2Shurikens(mapObj, xDes - 1, yDes - 1, previous)
+        clearFieldShurikens(mapObj, xDes - 1, yDes - 1, previous)
     if (xDes + 1) <= mapObj.maxX - 1 and (yDes + 1) <= mapObj.maxY - 1:
-        needToReName2Shurikens(mapObj, xDes + 1, yDes + 1, previous)
+        clearFieldShurikens(mapObj, xDes + 1, yDes + 1, previous)
     if (xDes + 1) <= mapObj.maxX - 1 and (yDes - 1) >= 0:
-        needToReName2Shurikens(mapObj, xDes + 1, yDes - 1, previous)
+        clearFieldShurikens(mapObj, xDes + 1, yDes - 1, previous)
 
     time.sleep(0.2)
     mapObj.displayMap()
@@ -192,7 +192,7 @@ def game(c, playObj, mapObj, mapArr, fileNum):
     return newMap
 
 
-def directionConditionBow(mapObj, xDes, yDes, mapArr, fileNum, direction, sign):
+def arrowDirectionBow(mapObj, xDes, yDes, mapArr, fileNum, direction, sign):
 
     if mapObj.objArr[yDes][xDes] == '-' or \
             (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0):
@@ -223,18 +223,18 @@ def directionConditionBow(mapObj, xDes, yDes, mapArr, fileNum, direction, sign):
             return 0,xDes,yDes
     return 0,xDes,yDes
 
-def needToReNameShurikens(mapObj, xDes, yDes, mapArr, fileNum):
+def checkAttackHitShurikens(mapObj, xDes, yDes, mapArr, fileNum):
     enemyType = check_enemy_type(xDes , yDes , mapArr, fileNum)
     if mapObj.objArr[yDes][xDes] == '-' or \
             (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0) or \
             (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] < 0 and enemyType == 3):
         kill_enemy(xDes, yDes , mapArr, fileNum, enemyType)
-        previous_bl = mapObj.objArr[yDes ][xDes ]
-        mapObj.objArr[yDes][xDes ] = 'sh_atk'
+        previous_bl = mapObj.objArr[yDes][xDes]
+        mapObj.objArr[yDes][xDes] = 'sh_atk'
         return previous_bl
 
 
-def needToReName2Shurikens(mapObj, xDes, yDes, previous):
+def clearFieldShurikens(mapObj, xDes, yDes, previous):
     if mapObj.objArr[yDes][xDes] == 'sh_atk':
         if mapObj.exitArr[yDes][xDes] < 0:
             mapObj.objArr[yDes][xDes] = '-'

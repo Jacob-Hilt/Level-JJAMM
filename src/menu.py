@@ -75,60 +75,24 @@ class Menu:
 
     # prints available weapons and *** which one is currently equipped on menu
     def print_weapons(self, playObj, stdscr, begin_y, begin_x):
-        if playObj.bow == True and playObj.sword == False and playObj.shurikens == False:
-            if playObj.equipped == 'bow':
-                stdscr.addstr(begin_y + 8, begin_x + 1, "***Bow***      ", curses.color_pair(10))
-            else:
-                stdscr.addstr(begin_y + 8, begin_x + 1, "Bow            ", curses.color_pair(10))
-        if playObj.sword == True and playObj.bow == False and playObj.shurikens == False:
+        if playObj.sword == True:
             if playObj.equipped == 'sword':
                 stdscr.addstr(begin_y + 7, begin_x + 1, "***Sword***    ", curses.color_pair(10))
             else:
                 stdscr.addstr(begin_y + 7, begin_x + 1, "Sword          ", curses.color_pair(10))
+    
+        if playObj.bow == True:
+            if playObj.equipped == 'bow':
+                stdscr.addstr(begin_y + 8, begin_x + 1, "***Bow***      ", curses.color_pair(10))
+            else:
+                stdscr.addstr(begin_y + 8, begin_x + 1, "Bow            ", curses.color_pair(10))
 
-        if playObj.sword == False and playObj.bow == False and playObj.shurikens == True:
+        if playObj.shurikens == True:
             if playObj.equipped == 'shurikens':
                 stdscr.addstr(begin_y + 9, begin_x + 1, "***Shurikens*** ", curses.color_pair(10))
             else:
                 stdscr.addstr(begin_y + 9, begin_x + 1, "Shurikens       ", curses.color_pair(10))
 
-        if playObj.sword == True and playObj.bow == True and playObj.shurikens == False:
-            if playObj.equipped == 'sword':
-                stdscr.addstr(begin_y + 7, begin_x + 1, "***Sword***    ", curses.color_pair(10))
-                stdscr.addstr(begin_y + 8, begin_x + 1, "Bow            ", curses.color_pair(10))
-            else:
-                stdscr.addstr(begin_y + 7, begin_x + 1, "Sword          ", curses.color_pair(10))
-                stdscr.addstr(begin_y + 8, begin_x + 1, "***Bow***      ", curses.color_pair(10))
-
-        if playObj.sword == True and playObj.bow == False and playObj.shurikens == True:
-            if playObj.equipped == 'sword':
-                stdscr.addstr(begin_y + 7, begin_x + 1, "***Sword***    ", curses.color_pair(10))
-                stdscr.addstr(begin_y + 9, begin_x + 1, "Shurikens       ", curses.color_pair(10))
-            else:
-                stdscr.addstr(begin_y + 7, begin_x + 1, "Sword          ", curses.color_pair(10))
-                stdscr.addstr(begin_y + 9, begin_x + 1, "***Shurikens*** ", curses.color_pair(10))
-
-        if playObj.sword == False and playObj.bow == True and playObj.shurikens == True:
-            if playObj.equipped == 'bow':
-                stdscr.addstr(begin_y + 8, begin_x + 1, "***Bow***      ", curses.color_pair(10))
-                stdscr.addstr(begin_y + 9, begin_x + 1, "Shurikens      ", curses.color_pair(10))
-            else:
-                stdscr.addstr(begin_y + 8, begin_x + 1, "Bow            ", curses.color_pair(10))
-                stdscr.addstr(begin_y + 9, begin_x + 1, "***Shurikens*** ", curses.color_pair(10))
-
-        if playObj.sword == True and playObj.bow == True and playObj.shurikens == True:
-            if playObj.equipped == 'sword':
-                stdscr.addstr(begin_y + 7, begin_x + 1, "***Sword***    ", curses.color_pair(10))
-                stdscr.addstr(begin_y + 8, begin_x + 1, "Bow            ", curses.color_pair(10))
-                stdscr.addstr(begin_y + 9, begin_x + 1, "Shurikens      ", curses.color_pair(10))
-            if playObj.equipped == 'bow':
-                stdscr.addstr(begin_y + 7, begin_x + 1, "Sword          ", curses.color_pair(10))
-                stdscr.addstr(begin_y + 8, begin_x + 1, "***Bow***      ", curses.color_pair(10))
-                stdscr.addstr(begin_y + 9, begin_x + 1, "Shurikens      ", curses.color_pair(10))
-            if playObj.equipped == 'shurikens':
-                stdscr.addstr(begin_y + 7, begin_x + 1, "Sword          ", curses.color_pair(10))
-                stdscr.addstr(begin_y + 8, begin_x + 1, "Bow            ", curses.color_pair(10))
-                stdscr.addstr(begin_y + 9, begin_x + 1, "***Shurikens***", curses.color_pair(10))
 
     # prints win condition for each level on menu
     def print_win_condition(self, mapObj, stdscr, begin_y, begin_x):
