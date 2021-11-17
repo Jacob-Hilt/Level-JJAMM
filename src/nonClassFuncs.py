@@ -121,70 +121,24 @@ def use_shurikens(playObj, mapObj, mapArr, fileNum):
     yDes = playObj.y_pos
 
     if (xDes - 1) >= 0 and (yDes + 1) <= mapObj.maxY - 1:
-        enemyType = check_enemy_type(xDes - 1, yDes + 1, mapArr, fileNum)
-        if mapObj.objArr[yDes + 1][xDes - 1] == '-' or \
-                (mapObj.objArr[yDes + 1][xDes - 1].isnumeric() and mapObj.exitArr[yDes + 1][xDes - 1] >= 0) or \
-                (mapObj.objArr[yDes + 1][xDes - 1].isnumeric() and mapObj.exitArr[yDes + 1][xDes - 1] < 0 and enemyType == 3):
-            kill_enemy(xDes - 1, yDes + 1, mapArr, fileNum, enemyType)
-            previous_bl = mapObj.objArr[yDes + 1][xDes - 1]
-            mapObj.objArr[yDes + 1][xDes - 1] = 'sh_atk'
-
+        previous = needToReNameShurikens(mapObj, xDes - 1, yDes + 1, mapArr, fileNum)
     if (xDes - 1) >= 0 and (yDes - 1) >= 0:
-        enemyType = check_enemy_type(xDes - 1, yDes - 1, mapArr, fileNum)
-        if mapObj.objArr[yDes - 1][xDes - 1] == '-' or \
-                (mapObj.objArr[yDes - 1][xDes - 1].isnumeric() and mapObj.exitArr[yDes - 1][xDes - 1] >= 0) or \
-                (mapObj.objArr[yDes - 1][xDes - 1].isnumeric() and mapObj.exitArr[yDes - 1][xDes - 1] < 0 and enemyType == 3):
-            kill_enemy(xDes - 1, yDes - 1, mapArr, fileNum, enemyType)
-            previous_ul = mapObj.objArr[yDes - 1][xDes - 1]
-            mapObj.objArr[yDes - 1][xDes - 1] = 'sh_atk'
-
+        previous = needToReNameShurikens(mapObj, xDes - 1, yDes - 1, mapArr, fileNum)
     if (xDes + 1) <= mapObj.maxX - 1 and (yDes + 1) <= mapObj.maxY - 1:
-        enemyType = check_enemy_type(xDes + 1, yDes + 1, mapArr, fileNum)
-        if mapObj.objArr[yDes + 1][xDes + 1] == '-' or \
-                (mapObj.objArr[yDes + 1][xDes + 1].isnumeric() and mapObj.exitArr[yDes + 1][xDes + 1] >= 0) or \
-                (mapObj.objArr[yDes + 1][xDes + 1].isnumeric() and mapObj.exitArr[yDes + 1][xDes + 1] < 0 and enemyType == 3):
-            kill_enemy(xDes + 1, yDes + 1, mapArr, fileNum, enemyType)
-            previous_br = mapObj.objArr[yDes + 1][xDes + 1]
-            mapObj.objArr[yDes + 1][xDes + 1] = 'sh_atk'
-
+        previous = needToReNameShurikens(mapObj, xDes + 1, yDes + 1, mapArr, fileNum)
     if (xDes + 1) <= mapObj.maxX - 1 and (yDes - 1) >= 0:
-        enemyType = check_enemy_type(xDes + 1, yDes - 1, mapArr, fileNum)
-        if mapObj.objArr[yDes - 1][xDes + 1] == '-' or \
-                (mapObj.objArr[yDes - 1][xDes + 1].isnumeric() and mapObj.exitArr[yDes - 1][xDes + 1] >= 0) or \
-                (mapObj.objArr[yDes - 1][xDes + 1].isnumeric() and mapObj.exitArr[yDes - 1][xDes + 1] < 0 and enemyType == 3):
-            kill_enemy(xDes + 1, yDes - 1, mapArr, fileNum, enemyType)
-            previous_ur = mapObj.objArr[yDes - 1][xDes + 1]
-            mapObj.objArr[yDes - 1][xDes + 1] = 'sh_atk'
+        previous = needToReNameShurikens(mapObj, xDes + 1, yDes - 1, mapArr, fileNum)
 
     mapObj.displayMap()
 
     if (xDes - 1) >= 0 and (yDes + 1) <= mapObj.maxY - 1:
-        if mapObj.objArr[yDes + 1][xDes - 1] == 'sh_atk':
-            if mapObj.exitArr[yDes + 1][xDes - 1] < 0:
-                mapObj.objArr[yDes + 1][xDes - 1] = '-'
-            else:
-                mapObj.objArr[yDes + 1][xDes - 1] = previous_bl
-
+        needToReName2Shurikens(mapObj, xDes - 1, yDes + 1, previous)
     if (xDes - 1) >= 0 and (yDes - 1) >= 0:
-        if mapObj.objArr[yDes - 1][xDes - 1] == 'sh_atk':
-            if mapObj.exitArr[yDes - 1][xDes - 1] < 0:
-                mapObj.objArr[yDes - 1][xDes - 1] = '-'
-            else:
-                mapObj.objArr[yDes - 1][xDes - 1] = previous_ul
-
+        needToReName2Shurikens(mapObj, xDes - 1, yDes - 1, previous)
     if (xDes + 1) <= mapObj.maxX - 1 and (yDes + 1) <= mapObj.maxY - 1:
-        if mapObj.objArr[yDes + 1][xDes + 1] == 'sh_atk':
-            if mapObj.exitArr[yDes + 1][xDes + 1] < 0:
-                mapObj.objArr[yDes + 1][xDes + 1] = '-'
-            else:
-                mapObj.objArr[yDes + 1][xDes + 1] = previous_br
-
+        needToReName2Shurikens(mapObj, xDes + 1, yDes + 1, previous)
     if (xDes + 1) <= mapObj.maxX - 1 and (yDes - 1) >= 0:
-        if mapObj.objArr[yDes - 1][xDes + 1] == 'sh_atk':
-            if mapObj.exitArr[yDes - 1][xDes + 1] < 0:
-                mapObj.objArr[yDes - 1][xDes + 1] = '-'
-            else:
-                mapObj.objArr[yDes - 1][xDes + 1] = previous_ur
+        needToReName2Shurikens(mapObj, xDes + 1, yDes - 1, previous)
 
     time.sleep(0.2)
     mapObj.displayMap()
@@ -271,4 +225,23 @@ def directionCondition(c, mapObj, xDes, yDes, mapArr, fileNum):
                 time.sleep(0.1)
                 mapObj.displayMap()
             return 0
+    curses.flushinp()
+
+def needToReNameShurikens(mapObj, xDes, yDes, mapArr, fileNum):
+    enemyType = check_enemy_type(xDes , yDes , mapArr, fileNum)
+    if mapObj.objArr[yDes][xDes] == '-' or \
+            (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0) or \
+            (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] < 0 and enemyType == 3):
+        kill_enemy(xDes, yDes , mapArr, fileNum, enemyType)
+        previous_bl = mapObj.objArr[yDes ][xDes ]
+        mapObj.objArr[yDes][xDes ] = 'sh_atk'
+	return previous_bl
+    curses.flushinp()
+
+def needToReName2Shurikens(mapObj, xDes, yDes, previous):
+    if mapObj.objArr[yDes][xDes] == 'sh_atk':
+        if mapObj.exitArr[yDes][xDes] < 0:
+            mapObj.objArr[yDes][xDes] = '-'
+        else:
+            mapObj.objArr[yDes][xDes] = previous
     curses.flushinp()
