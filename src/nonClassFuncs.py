@@ -80,33 +80,37 @@ def use_bow(c, playObj, mapObj, mapArr, fileNum):
     yDes = playObj.y_pos
     if c == curses.KEY_LEFT:
         if playObj.x_pos > 0:
-            xDes -= 1
+            sign = -1
+            xDes = xDes + sign
             while xDes >= 0:
-                checkBreak = directionConditionBow(c, mapObj, xDes, yDes, mapArr, fileNum)
+                checkBreak = directionConditionBow(mapObj, xDes, yDes, mapArr, fileNum, 'b_l_atk', sign)
                 if checkBreak == 0:
                     break
 
     if c == curses.KEY_RIGHT:
         if playObj.x_pos < mapObj.maxX - 1:
-            xDes += 1
+            sign = 1
+            xDes = xDes + sign
             while xDes <= mapObj.maxX - 1:
-                checkBreak = directionConditionBow(c, mapObj, xDes, yDes, mapArr, fileNum)
+                checkBreak = directionConditionBow(mapObj, xDes, yDes, mapArr, fileNum, 'b_r_atk', sign)
                 if checkBreak == 0:
                     break
 
     if c == curses.KEY_UP:
         if playObj.y_pos < mapObj.maxY - 1:
-            yDes -= 1
+            sign = -1
+            yDes = yDes + sign
             while yDes >= 0:
-                checkBreak = directionConditionBow(c, mapObj, xDes, yDes, mapArr, fileNum)
+                checkBreak = directionConditionBow(mapObj, xDes, yDes, mapArr, fileNum, 'b_u_atk', sign)
                 if checkBreak == 0:
                     break
 
     if c == curses.KEY_DOWN:
         if playObj.y_pos > 0:
-            yDes += 1
+            sign = +1
+            yDes = yDes + sign
             while yDes <= mapObj.maxY - 1:
-                checkBreak = directionConditionBow(c, mapObj, xDes, yDes, mapArr, fileNum)
+                checkBreak = directionConditionBow(mapObj, xDes, yDes, mapArr, fileNum, 'b_d_atk', sign)
                 if checkBreak == 0:
                     break
     curses.flushinp()
@@ -188,19 +192,7 @@ def game(c, playObj, mapObj, mapArr, fileNum):
     return newMap
 
 
-def directionConditionBow(c, mapObj, xDes, yDes, mapArr, fileNum):
-    if c == curses.KEY_LEFT:
-        direction = 'b_l_atk' 
-        sign = -1
-    if c == curses.KEY_RIGHT:
-        direction = 'b_r_atk' 
-        sign = 1
-    if c == curses.KEY_UP:
-        direction = 'b_u_atk' 
-        sign = -1
-    if c == curses.KEY_DOWN:
-        direction = 'b_d_atk'
-        sign = 1
+def directionConditionBow(mapObj, xDes, yDes, mapArr, fileNum, direction, sign):
 
     if mapObj.objArr[yDes][xDes] == '-' or \
             (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0):
