@@ -83,7 +83,7 @@ def use_bow(c, playObj, mapObj, mapArr, fileNum):
             sign = -1
             xDes = xDes + sign
             while xDes >= 0:
-                checkBreak = directionConditionBow(mapObj, xDes, yDes, mapArr, fileNum, 'b_l_atk', sign)
+                checkBreak,xDes,yDes = directionConditionBow(mapObj, xDes, yDes, mapArr, fileNum, "b_l_atk", sign)
                 if checkBreak == 0:
                     break
 
@@ -92,7 +92,7 @@ def use_bow(c, playObj, mapObj, mapArr, fileNum):
             sign = 1
             xDes = xDes + sign
             while xDes <= mapObj.maxX - 1:
-                checkBreak = directionConditionBow(mapObj, xDes, yDes, mapArr, fileNum, 'b_r_atk', sign)
+                checkBreak,xDes,yDes = directionConditionBow(mapObj, xDes, yDes, mapArr, fileNum, "b_r_atk", sign)
                 if checkBreak == 0:
                     break
 
@@ -101,7 +101,7 @@ def use_bow(c, playObj, mapObj, mapArr, fileNum):
             sign = -1
             yDes = yDes + sign
             while yDes >= 0:
-                checkBreak = directionConditionBow(mapObj, xDes, yDes, mapArr, fileNum, 'b_u_atk', sign)
+                checkBreak,xDes,yDes = directionConditionBow(mapObj, xDes, yDes, mapArr, fileNum, "b_u_atk", sign)
                 if checkBreak == 0:
                     break
 
@@ -110,7 +110,7 @@ def use_bow(c, playObj, mapObj, mapArr, fileNum):
             sign = +1
             yDes = yDes + sign
             while yDes <= mapObj.maxY - 1:
-                checkBreak = directionConditionBow(mapObj, xDes, yDes, mapArr, fileNum, 'b_d_atk', sign)
+                checkBreak,xDes,yDes = directionConditionBow(mapObj, xDes, yDes, mapArr, fileNum, "b_d_atk", sign)
                 if checkBreak == 0:
                     break
     curses.flushinp()
@@ -203,8 +203,12 @@ def directionConditionBow(mapObj, xDes, yDes, mapArr, fileNum, direction, sign):
         mapObj.stdscr.refresh()
         time.sleep(0.1)
         mapObj.displayMap()
-        xDes = xDes + sign
-        return 1
+        if direction == 'b_l_atk' or direction == 'b_r_atk':
+            xDes = xDes + sign
+        else:
+            yDes = yDes + sign
+
+        return 1,xDes,yDes
     else:
         if mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] < 0:
             enemyType = check_enemy_type(xDes, yDes, mapArr, fileNum)
@@ -216,8 +220,8 @@ def directionConditionBow(mapObj, xDes, yDes, mapArr, fileNum, direction, sign):
                 mapObj.stdscr.refresh()
                 time.sleep(0.1)
                 mapObj.displayMap()
-            return 0
-    curses.flushinp()
+            return 0,xDes,yDes
+    return 0,xDes,yDes
 
 def needToReNameShurikens(mapObj, xDes, yDes, mapArr, fileNum):
     enemyType = check_enemy_type(xDes , yDes , mapArr, fileNum)
@@ -227,8 +231,8 @@ def needToReNameShurikens(mapObj, xDes, yDes, mapArr, fileNum):
         kill_enemy(xDes, yDes , mapArr, fileNum, enemyType)
         previous_bl = mapObj.objArr[yDes ][xDes ]
         mapObj.objArr[yDes][xDes ] = 'sh_atk'
-    return previous_bl
-    curses.flushinp()
+        return previous_bl
+
 
 def needToReName2Shurikens(mapObj, xDes, yDes, previous):
     if mapObj.objArr[yDes][xDes] == 'sh_atk':
