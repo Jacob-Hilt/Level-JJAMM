@@ -43,18 +43,18 @@ def newFile(userPath):
     fi.close()
 
 
-def moveCursor(c, y, x, mapObj):
+def moveCursor(command, y, x, mapObj):
     mapObj.objArr[y][x] = mapObj.initArr[y][x]
-    if c == curses.KEY_LEFT:
+    if command == curses.KEY_LEFT:
         if x != 0:
             x -= 1
-    elif c == curses.KEY_RIGHT:
+    elif command == curses.KEY_RIGHT:
         if x != mapObj.maxX - 1:
             x += 1
-    elif c == curses.KEY_UP:
+    elif command == curses.KEY_UP:
         if y != 0:
             y -= 1
-    elif c == curses.KEY_DOWN:
+    elif command == curses.KEY_DOWN:
         if y != mapObj.maxY - 1:
             y += 1
 
@@ -63,10 +63,10 @@ def moveCursor(c, y, x, mapObj):
     return y, x
 
 
-def isValid(c, mapObj, y, x):
-    if c == '-' or c == 'w' or c == 's' \
-            or c == 'b' or c == 'h' or \
-            c == 'k' or c == 'p' or c.isnumeric() \
+def isValid(command, mapObj, y, x):
+    if command == '-' or command == 'w' or command == 's' \
+            or command == 'b' or command == 'h' or \
+            command == 'k' or command == 'p' or c.isnumeric() \
             or c.isupper():
         if mapObj.initArr[y][x] == 'e':
             removeE(mapObj, y, x)
@@ -139,31 +139,31 @@ def main():
     while True:
         mapObj.displayMap()
 
-        c = mapObj.stdscr.getch()
-        if c == ord('q'):
+        command = mapObj.stdscr.getch()
+        if command == ord('q'):
             break
 
-        elif c == curses.KEY_LEFT or c == curses.KEY_RIGHT or c == curses.KEY_UP or c == curses.KEY_DOWN:
-            y, x = moveCursor(c, y, x, mapObj)
+        elif command == curses.KEY_LEFT or command == curses.KEY_RIGHT or command == curses.KEY_UP or command == curses.KEY_DOWN:
+            y, x = moveCursor(command, y, x, mapObj)
 
-        elif c == ord('e'):
+        elif command == ord('e'):
             if x < mapObj.maxX - 1:
                 if mapObj.initArr[y][x + 1].isnumeric():
-                    xDest = x + 1
-                    while xDest < mapObj.maxX - 1 and mapObj.initArr[y][xDest].isnumeric():
-                        mapObj.exitArr[y][xDest] = 0
-                        xDest += 1
+                    x_destinationt = x + 1
+                    while x_destinationt < mapObj.maxX - 1 and mapObj.initArr[y][x_destinationt].isnumeric():
+                        mapObj.exitArr[y][x_destinationt] = 0
+                        x_destinationt += 1
 
                     mapObj.objArr[y][x] = 'e'
                     mapObj.initArr[y][x] = 'e'
                     mapObj.objArr[y][x] = 'c'
-                    mapObj.initArr[y][xDest] = 'e'
-                    x = xDest
-                    moveCursor(c, y, x, mapObj)
+                    mapObj.initArr[y][x_destinationt] = 'e'
+                    x = x_destinationt
+                    moveCursor(command, y, x, mapObj)
 
         else:
             # https://stackoverflow.com/questions/36319228/python-3-4-getch-a-typewriter-python
-            isValid(chr(c), mapObj, y, x)
+            isValid(chr(command), mapObj, y, x)
 
         curses.flushinp()
 
