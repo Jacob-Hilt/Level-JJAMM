@@ -22,7 +22,7 @@ def atoi(text):
 
 # copied exactly from: https://stackoverflow.com/questions/5967500/how-to-correctly-sort-a-string-with-a-number-inside
 def natural_keys(text):
-    return [atoi(c) for c in re.split(r'(\d+)', text)]
+    return [atoi(command) for command in re.split(r'(\d+)', text)]
 
 
 def check_enemy_type(xPos, yPos, mapArr, fileNum):
@@ -38,157 +38,157 @@ def kill_enemy(xPos, yPos, mapArr, fileNum, enemyType):
             enemy.dead()
 
 
-def use_sword(c, playObj, mapObj, mapArr, fileNum):
+def use_sword(command, playObj, mapObj, mapArr, fileNum):
     if not playObj.get_sword():
         # display 'no sword' message in menu
         return
-    xDes = playObj.x_pos
-    yDes = playObj.y_pos
-    if c == curses.KEY_LEFT:
+    x_destination = playObj.x_pos
+    y_destination = playObj.y_pos
+    if command == curses.KEY_LEFT:
         if playObj.x_pos > 0:
-            xDes -= 1
-    if c == curses.KEY_RIGHT:
+            x_destination -= 1
+    if command == curses.KEY_RIGHT:
         if playObj.x_pos < mapObj.maxX - 1:
-            xDes += 1
-    if c == curses.KEY_UP:
+            x_destination += 1
+    if command == curses.KEY_UP:
         if playObj.y_pos < mapObj.maxY - 1:
-            yDes -= 1
-    if c == curses.KEY_DOWN:
+            y_destination -= 1
+    if command == curses.KEY_DOWN:
         if playObj.y_pos > 0:
-            yDes += 1
+            y_destination += 1
 
-    if xDes >= mapObj.maxX or xDes < 0 or yDes >= mapObj.maxY or yDes < 0:
+    if x_destination >= mapObj.maxX or x_destination < 0 or y_destination >= mapObj.maxY or y_destination < 0:
         return
-    enemyTyp = check_enemy_type(xDes, yDes, mapArr, fileNum)
-    if (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0) or \
-            mapObj.objArr[yDes][xDes] == '-' or \
-            (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] < 0 and enemyTyp == 1):
-        previous = mapObj.objArr[yDes][xDes]
-        mapObj.objArr[yDes][xDes] = 's'
+    enemyTyp = check_enemy_type(x_destination, y_destination, mapArr, fileNum)
+    if (mapObj.objArr[y_destination][x_destination].isnumeric() and mapObj.exitArr[y_destination][x_destination] >= 0) or \
+            mapObj.objArr[y_destination][x_destination] == '-' or \
+            (mapObj.objArr[y_destination][x_destination].isnumeric() and mapObj.exitArr[y_destination][x_destination] < 0 and enemyTyp == 1):
+        previous = mapObj.objArr[y_destination][x_destination]
+        mapObj.objArr[y_destination][x_destination] = 's'
         mapObj.displayMap()
-        kill_enemy(xDes, yDes, mapArr, fileNum, enemyTyp)
+        kill_enemy(x_destination, y_destination, mapArr, fileNum, enemyTyp)
         if previous == '-' or \
-                (previous.isnumeric() and mapObj.exitArr[yDes][xDes] < 0 and check_enemy_type(xDes, yDes, mapArr, fileNum) == 1):
-            mapObj.objArr[yDes][xDes] = '-'
+                (previous.isnumeric() and mapObj.exitArr[y_destination][x_destination] < 0 and check_enemy_type(x_destination, y_destination, mapArr, fileNum) == 1):
+            mapObj.objArr[y_destination][x_destination] = '-'
             time.sleep(0.2)
             mapObj.displayMap()
-        elif previous.isnumeric() and mapObj.exitArr[yDes][xDes] >= 0:
-            mapObj.objArr[yDes][xDes] = mapObj.initArr[yDes][xDes]
+        elif previous.isnumeric() and mapObj.exitArr[y_destination][x_destination] >= 0:
+            mapObj.objArr[y_destination][x_destination] = mapObj.initArr[y_destination][x_destination]
             time.sleep(0.2)
             mapObj.displayMap()
 
     curses.flushinp()
 
 
-def use_bow(c, playObj, mapObj, mapArr, fileNum):
+def use_bow(command, playObj, mapObj, mapArr, fileNum):
     if not playObj.get_bow():
         # display 'no bow' message in menu
         return
-    xDes = playObj.x_pos
-    yDes = playObj.y_pos
-    if c == curses.KEY_LEFT:
+    x_destination = playObj.x_pos
+    y_destination = playObj.y_pos
+    if command == curses.KEY_LEFT:
         if playObj.x_pos > 0:
-            xDes -= 1
-            while xDes >= 0:
-                if mapObj.objArr[yDes][xDes] == '-' or \
-                        (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0):
-                    previous = mapObj.objArr[yDes][xDes]
-                    mapObj.objArr[yDes][xDes] = 'b_l_atk'
+            x_destination -= 1
+            while x_destination >= 0:
+                if mapObj.objArr[y_destination][x_destination] == '-' or \
+                        (mapObj.objArr[y_destination][x_destination].isnumeric() and mapObj.exitArr[y_destination][x_destination] >= 0):
+                    previous = mapObj.objArr[y_destination][x_destination]
+                    mapObj.objArr[y_destination][x_destination] = 'b_l_atk'
                     mapObj.displayMap()
-                    mapObj.objArr[yDes][xDes] = previous
+                    mapObj.objArr[y_destination][x_destination] = previous
                     mapObj.stdscr.refresh()
                     time.sleep(0.1)
                     mapObj.displayMap()
-                    xDes -= 1
+                    x_destination -= 1
                 else:
-                    if mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] < 0:
-                        enemyType = check_enemy_type(xDes, yDes, mapArr, fileNum)
+                    if mapObj.objArr[y_destination][x_destination].isnumeric() and mapObj.exitArr[y_destination][x_destination] < 0:
+                        enemyType = check_enemy_type(x_destination, y_destination, mapArr, fileNum)
                         if enemyType == 2:
-                            kill_enemy(xDes, yDes, mapArr, fileNum, enemyType)
-                            mapObj.objArr[yDes][xDes] = 'b_l_atk'
+                            kill_enemy(x_destination, y_destination, mapArr, fileNum, enemyType)
+                            mapObj.objArr[y_destination][x_destination] = 'b_l_atk'
                             mapObj.displayMap()
-                            mapObj.objArr[yDes][xDes] = '-'
+                            mapObj.objArr[y_destination][x_destination] = '-'
                             mapObj.stdscr.refresh()
                             time.sleep(0.1)
                             mapObj.displayMap()
                     break
 
-    if c == curses.KEY_RIGHT:
+    if command == curses.KEY_RIGHT:
         if playObj.x_pos < mapObj.maxX - 1:
-            xDes += 1
-            while xDes <= mapObj.maxX - 1:
-                if mapObj.objArr[yDes][xDes] == '-' or \
-                        (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0):
-                    previous = mapObj.objArr[yDes][xDes]
-                    mapObj.objArr[yDes][xDes] = 'b_r_atk'
+            x_destination += 1
+            while x_destination <= mapObj.maxX - 1:
+                if mapObj.objArr[y_destination][x_destination] == '-' or \
+                        (mapObj.objArr[y_destination][x_destination].isnumeric() and mapObj.exitArr[y_destination][x_destination] >= 0):
+                    previous = mapObj.objArr[y_destination][x_destination]
+                    mapObj.objArr[y_destination][x_destination] = 'b_r_atk'
                     mapObj.displayMap()
-                    mapObj.objArr[yDes][xDes] = previous
+                    mapObj.objArr[y_destination][x_destination] = previous
                     mapObj.stdscr.refresh()
                     time.sleep(0.1)
                     mapObj.displayMap()
-                    xDes += 1
+                    x_destination += 1
                 else:
-                    if mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] < 0:
-                        enemyType = check_enemy_type(xDes, yDes, mapArr, fileNum)
+                    if mapObj.objArr[y_destination][x_destination].isnumeric() and mapObj.exitArr[y_destination][x_destination] < 0:
+                        enemyType = check_enemy_type(x_destination, y_destination, mapArr, fileNum)
                         if enemyType == 2:
-                            kill_enemy(xDes, yDes, mapArr, fileNum, enemyType)
-                            mapObj.objArr[yDes][xDes] = 'b_r_atk'
+                            kill_enemy(x_destination, y_destination, mapArr, fileNum, enemyType)
+                            mapObj.objArr[y_destination][x_destination] = 'b_r_atk'
                             mapObj.displayMap()
-                            mapObj.objArr[yDes][xDes] = '-'
+                            mapObj.objArr[y_destination][x_destination] = '-'
                             mapObj.stdscr.refresh()
                             time.sleep(0.1)
                             mapObj.displayMap()
                     break
 
-    if c == curses.KEY_UP:
+    if command == curses.KEY_UP:
         if playObj.y_pos < mapObj.maxY - 1:
-            yDes -= 1
-            while yDes >= 0:
-                if mapObj.objArr[yDes][xDes] == '-' or \
-                        (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0):
-                    previous = mapObj.objArr[yDes][xDes]
-                    mapObj.objArr[yDes][xDes] = 'b_u_atk'
+            y_destination -= 1
+            while y_destination >= 0:
+                if mapObj.objArr[y_destination][x_destination] == '-' or \
+                        (mapObj.objArr[y_destination][x_destination].isnumeric() and mapObj.exitArr[y_destination][x_destination] >= 0):
+                    previous = mapObj.objArr[y_destination][x_destination]
+                    mapObj.objArr[y_destination][x_destination] = 'b_u_atk'
                     mapObj.displayMap()
-                    mapObj.objArr[yDes][xDes] = previous
+                    mapObj.objArr[y_destination][x_destination] = previous
                     mapObj.stdscr.refresh()
                     time.sleep(0.1)
                     mapObj.displayMap()
-                    yDes -= 1
+                    y_destination -= 1
                 else:
-                    if mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] < 0:
-                        enemyType = check_enemy_type(xDes, yDes, mapArr, fileNum)
+                    if mapObj.objArr[y_destination][x_destination].isnumeric() and mapObj.exitArr[y_destination][x_destination] < 0:
+                        enemyType = check_enemy_type(x_destination, y_destination, mapArr, fileNum)
                         if enemyType == 2:
-                            kill_enemy(xDes, yDes, mapArr, fileNum, enemyType)
-                            mapObj.objArr[yDes][xDes] = 'b_u_atk'
+                            kill_enemy(x_destination, y_destination, mapArr, fileNum, enemyType)
+                            mapObj.objArr[y_destination][x_destination] = 'b_u_atk'
                             mapObj.displayMap()
-                            mapObj.objArr[yDes][xDes] = '-'
+                            mapObj.objArr[y_destination][x_destination] = '-'
                             mapObj.stdscr.refresh()
                             time.sleep(0.1)
                             mapObj.displayMap()
                     break
 
-    if c == curses.KEY_DOWN:
+    if command == curses.KEY_DOWN:
         if playObj.y_pos > 0:
-            yDes += 1
-            while yDes <= mapObj.maxY - 1:
-                if mapObj.objArr[yDes][xDes] == '-' or \
-                        (mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] >= 0):
-                    previous = mapObj.objArr[yDes][xDes]
-                    mapObj.objArr[yDes][xDes] = 'b_d_atk'
+            y_destination += 1
+            while y_destination <= mapObj.maxY - 1:
+                if mapObj.objArr[y_destination][x_destination] == '-' or \
+                        (mapObj.objArr[y_destination][x_destination].isnumeric() and mapObj.exitArr[y_destination][x_destination] >= 0):
+                    previous = mapObj.objArr[y_destination][x_destination]
+                    mapObj.objArr[y_destination][x_destination] = 'b_d_atk'
                     mapObj.displayMap()
-                    mapObj.objArr[yDes][xDes] = previous
+                    mapObj.objArr[y_destination][x_destination] = previous
                     mapObj.stdscr.refresh()
                     time.sleep(0.1)
                     mapObj.displayMap()
-                    yDes += 1
+                    y_destination += 1
                 else:
-                    if mapObj.objArr[yDes][xDes].isnumeric() and mapObj.exitArr[yDes][xDes] < 0:
-                        enemyType = check_enemy_type(xDes, yDes, mapArr, fileNum)
+                    if mapObj.objArr[y_destination][x_destination].isnumeric() and mapObj.exitArr[y_destination][x_destination] < 0:
+                        enemyType = check_enemy_type(x_destination, y_destination, mapArr, fileNum)
                         if enemyType == 2:
-                            kill_enemy(xDes, yDes, mapArr, fileNum, enemyType)
-                            mapObj.objArr[yDes][xDes] = 'b_d_atk'
+                            kill_enemy(x_destination, y_destination, mapArr, fileNum, enemyType)
+                            mapObj.objArr[y_destination][x_destination] = 'b_d_atk'
                             mapObj.displayMap()
-                            mapObj.objArr[yDes][xDes] = '-'
+                            mapObj.objArr[y_destination][x_destination] = '-'
                             mapObj.stdscr.refresh()
                             time.sleep(0.1)
                             mapObj.displayMap()
@@ -199,114 +199,114 @@ def use_bow(c, playObj, mapObj, mapArr, fileNum):
 def use_shurikens(playObj, mapObj, mapArr, fileNum):
     if not playObj.get_shurikens():
         return
-    xDes = playObj.x_pos
-    yDes = playObj.y_pos
+    x_destination = playObj.x_pos
+    y_destination = playObj.y_pos
 
-    if (xDes - 1) >= 0 and (yDes + 1) <= mapObj.maxY - 1:
-        enemyType = check_enemy_type(xDes - 1, yDes + 1, mapArr, fileNum)
-        if mapObj.objArr[yDes + 1][xDes - 1] == '-' or \
-                (mapObj.objArr[yDes + 1][xDes - 1].isnumeric() and mapObj.exitArr[yDes + 1][xDes - 1] >= 0) or \
-                (mapObj.objArr[yDes + 1][xDes - 1].isnumeric() and mapObj.exitArr[yDes + 1][xDes - 1] < 0 and enemyType == 3):
-            kill_enemy(xDes - 1, yDes + 1, mapArr, fileNum, enemyType)
-            previous_bl = mapObj.objArr[yDes + 1][xDes - 1]
-            mapObj.objArr[yDes + 1][xDes - 1] = 'sh_atk'
+    if (x_destination - 1) >= 0 and (y_destination + 1) <= mapObj.maxY - 1:
+        enemyType = check_enemy_type(x_destination - 1, y_destination + 1, mapArr, fileNum)
+        if mapObj.objArr[y_destination + 1][x_destination - 1] == '-' or \
+                (mapObj.objArr[y_destination + 1][x_destination - 1].isnumeric() and mapObj.exitArr[y_destination + 1][x_destination - 1] >= 0) or \
+                (mapObj.objArr[y_destination + 1][x_destination - 1].isnumeric() and mapObj.exitArr[y_destination + 1][x_destination - 1] < 0 and enemyType == 3):
+            kill_enemy(x_destination - 1, y_destination + 1, mapArr, fileNum, enemyType)
+            previous_bl = mapObj.objArr[y_destination + 1][x_destination - 1]
+            mapObj.objArr[y_destination + 1][x_destination - 1] = 'sh_atk'
 
-    if (xDes - 1) >= 0 and (yDes - 1) >= 0:
-        enemyType = check_enemy_type(xDes - 1, yDes - 1, mapArr, fileNum)
-        if mapObj.objArr[yDes - 1][xDes - 1] == '-' or \
-                (mapObj.objArr[yDes - 1][xDes - 1].isnumeric() and mapObj.exitArr[yDes - 1][xDes - 1] >= 0) or \
-                (mapObj.objArr[yDes - 1][xDes - 1].isnumeric() and mapObj.exitArr[yDes - 1][xDes - 1] < 0 and enemyType == 3):
-            kill_enemy(xDes - 1, yDes - 1, mapArr, fileNum, enemyType)
-            previous_ul = mapObj.objArr[yDes - 1][xDes - 1]
-            mapObj.objArr[yDes - 1][xDes - 1] = 'sh_atk'
+    if (x_destination - 1) >= 0 and (y_destination - 1) >= 0:
+        enemyType = check_enemy_type(x_destination - 1, y_destination - 1, mapArr, fileNum)
+        if mapObj.objArr[y_destination - 1][x_destination - 1] == '-' or \
+                (mapObj.objArr[y_destination - 1][x_destination - 1].isnumeric() and mapObj.exitArr[y_destination - 1][x_destination - 1] >= 0) or \
+                (mapObj.objArr[y_destination - 1][x_destination - 1].isnumeric() and mapObj.exitArr[y_destination - 1][x_destination - 1] < 0 and enemyType == 3):
+            kill_enemy(x_destination - 1, y_destination - 1, mapArr, fileNum, enemyType)
+            previous_ul = mapObj.objArr[y_destination - 1][x_destination - 1]
+            mapObj.objArr[y_destination - 1][x_destination - 1] = 'sh_atk'
 
-    if (xDes + 1) <= mapObj.maxX - 1 and (yDes + 1) <= mapObj.maxY - 1:
-        enemyType = check_enemy_type(xDes + 1, yDes + 1, mapArr, fileNum)
-        if mapObj.objArr[yDes + 1][xDes + 1] == '-' or \
-                (mapObj.objArr[yDes + 1][xDes + 1].isnumeric() and mapObj.exitArr[yDes + 1][xDes + 1] >= 0) or \
-                (mapObj.objArr[yDes + 1][xDes + 1].isnumeric() and mapObj.exitArr[yDes + 1][xDes + 1] < 0 and enemyType == 3):
-            kill_enemy(xDes + 1, yDes + 1, mapArr, fileNum, enemyType)
-            previous_br = mapObj.objArr[yDes + 1][xDes + 1]
-            mapObj.objArr[yDes + 1][xDes + 1] = 'sh_atk'
+    if (x_destination + 1) <= mapObj.maxX - 1 and (y_destination + 1) <= mapObj.maxY - 1:
+        enemyType = check_enemy_type(x_destination + 1, y_destination + 1, mapArr, fileNum)
+        if mapObj.objArr[y_destination + 1][x_destination + 1] == '-' or \
+                (mapObj.objArr[y_destination + 1][x_destination + 1].isnumeric() and mapObj.exitArr[y_destination + 1][x_destination + 1] >= 0) or \
+                (mapObj.objArr[y_destination + 1][x_destination + 1].isnumeric() and mapObj.exitArr[y_destination + 1][x_destination + 1] < 0 and enemyType == 3):
+            kill_enemy(x_destination + 1, y_destination + 1, mapArr, fileNum, enemyType)
+            previous_br = mapObj.objArr[y_destination + 1][x_destination + 1]
+            mapObj.objArr[y_destination + 1][x_destination + 1] = 'sh_atk'
 
-    if (xDes + 1) <= mapObj.maxX - 1 and (yDes - 1) >= 0:
-        enemyType = check_enemy_type(xDes + 1, yDes - 1, mapArr, fileNum)
-        if mapObj.objArr[yDes - 1][xDes + 1] == '-' or \
-                (mapObj.objArr[yDes - 1][xDes + 1].isnumeric() and mapObj.exitArr[yDes - 1][xDes + 1] >= 0) or \
-                (mapObj.objArr[yDes - 1][xDes + 1].isnumeric() and mapObj.exitArr[yDes - 1][xDes + 1] < 0 and enemyType == 3):
-            kill_enemy(xDes + 1, yDes - 1, mapArr, fileNum, enemyType)
-            previous_ur = mapObj.objArr[yDes - 1][xDes + 1]
-            mapObj.objArr[yDes - 1][xDes + 1] = 'sh_atk'
+    if (x_destination + 1) <= mapObj.maxX - 1 and (y_destination - 1) >= 0:
+        enemyType = check_enemy_type(x_destination + 1, y_destination - 1, mapArr, fileNum)
+        if mapObj.objArr[y_destination - 1][x_destination + 1] == '-' or \
+                (mapObj.objArr[y_destination - 1][x_destination + 1].isnumeric() and mapObj.exitArr[y_destination - 1][x_destination + 1] >= 0) or \
+                (mapObj.objArr[y_destination - 1][x_destination + 1].isnumeric() and mapObj.exitArr[y_destination - 1][x_destination + 1] < 0 and enemyType == 3):
+            kill_enemy(x_destination + 1, y_destination - 1, mapArr, fileNum, enemyType)
+            previous_ur = mapObj.objArr[y_destination - 1][x_destination + 1]
+            mapObj.objArr[y_destination - 1][x_destination + 1] = 'sh_atk'
 
     mapObj.displayMap()
 
-    if (xDes - 1) >= 0 and (yDes + 1) <= mapObj.maxY - 1:
-        if mapObj.objArr[yDes + 1][xDes - 1] == 'sh_atk':
-            if mapObj.exitArr[yDes + 1][xDes - 1] < 0:
-                mapObj.objArr[yDes + 1][xDes - 1] = '-'
+    if (x_destination - 1) >= 0 and (y_destination + 1) <= mapObj.maxY - 1:
+        if mapObj.objArr[y_destination + 1][x_destination - 1] == 'sh_atk':
+            if mapObj.exitArr[y_destination + 1][x_destination - 1] < 0:
+                mapObj.objArr[y_destination + 1][x_destination - 1] = '-'
             else:
-                mapObj.objArr[yDes + 1][xDes - 1] = previous_bl
+                mapObj.objArr[y_destination + 1][x_destination - 1] = previous_bl
 
-    if (xDes - 1) >= 0 and (yDes - 1) >= 0:
-        if mapObj.objArr[yDes - 1][xDes - 1] == 'sh_atk':
-            if mapObj.exitArr[yDes - 1][xDes - 1] < 0:
-                mapObj.objArr[yDes - 1][xDes - 1] = '-'
+    if (x_destination - 1) >= 0 and (y_destination - 1) >= 0:
+        if mapObj.objArr[y_destination - 1][x_destination - 1] == 'sh_atk':
+            if mapObj.exitArr[y_destination - 1][x_destination - 1] < 0:
+                mapObj.objArr[y_destination - 1][x_destination - 1] = '-'
             else:
-                mapObj.objArr[yDes - 1][xDes - 1] = previous_ul
+                mapObj.objArr[y_destination - 1][x_destination - 1] = previous_ul
 
-    if (xDes + 1) <= mapObj.maxX - 1 and (yDes + 1) <= mapObj.maxY - 1:
-        if mapObj.objArr[yDes + 1][xDes + 1] == 'sh_atk':
-            if mapObj.exitArr[yDes + 1][xDes + 1] < 0:
-                mapObj.objArr[yDes + 1][xDes + 1] = '-'
+    if (x_destination + 1) <= mapObj.maxX - 1 and (y_destination + 1) <= mapObj.maxY - 1:
+        if mapObj.objArr[y_destination + 1][x_destination + 1] == 'sh_atk':
+            if mapObj.exitArr[y_destination + 1][x_destination + 1] < 0:
+                mapObj.objArr[y_destination + 1][x_destination + 1] = '-'
             else:
-                mapObj.objArr[yDes + 1][xDes + 1] = previous_br
+                mapObj.objArr[y_destination + 1][x_destination + 1] = previous_br
 
-    if (xDes + 1) <= mapObj.maxX - 1 and (yDes - 1) >= 0:
-        if mapObj.objArr[yDes - 1][xDes + 1] == 'sh_atk':
-            if mapObj.exitArr[yDes - 1][xDes + 1] < 0:
-                mapObj.objArr[yDes - 1][xDes + 1] = '-'
+    if (x_destination + 1) <= mapObj.maxX - 1 and (y_destination - 1) >= 0:
+        if mapObj.objArr[y_destination - 1][x_destination + 1] == 'sh_atk':
+            if mapObj.exitArr[y_destination - 1][x_destination + 1] < 0:
+                mapObj.objArr[y_destination - 1][x_destination + 1] = '-'
             else:
-                mapObj.objArr[yDes - 1][xDes + 1] = previous_ur
+                mapObj.objArr[y_destination - 1][x_destination + 1] = previous_ur
 
     time.sleep(0.2)
     mapObj.displayMap()
     curses.flushinp()
 
 
-def game(c, playObj, mapObj, mapArr, fileNum):
+def game(command, playObj, mapObj, mapArr, fileNum):
     newMap = None
-    if c == ord('w'):
+    if command == ord('w'):
         newMap = playObj.move('w', mapObj, fileNum)
 
-    elif c == ord('a'):
+    elif command == ord('a'):
         newMap = playObj.move('a', mapObj, fileNum)
 
-    elif c == ord('s'):
+    elif command == ord('s'):
         newMap = playObj.move('s', mapObj, fileNum)
 
-    elif c == ord('d'):
+    elif command == ord('d'):
         newMap = playObj.move('d', mapObj, fileNum)
 
-    elif c == curses.KEY_LEFT or c == curses.KEY_RIGHT or c == curses.KEY_UP or c == curses.KEY_DOWN:
+    elif command == curses.KEY_LEFT or command == curses.KEY_RIGHT or command == curses.KEY_UP or command == curses.KEY_DOWN:
         equipped = playObj.get_equipped()
         if equipped == 'sword':
-            use_sword(c, playObj, mapObj, mapArr, fileNum)
+            use_sword(command, playObj, mapObj, mapArr, fileNum)
         elif equipped == 'bow':
-            use_bow(c, playObj, mapObj, mapArr, fileNum)
+            use_bow(command, playObj, mapObj, mapArr, fileNum)
         elif equipped == 'shurikens':
             use_shurikens(playObj, mapObj, mapArr, fileNum)
 
-    elif c == ord('r'):
+    elif command == ord('r'):
         mapObj.reset(playObj)
 
-    elif c == ord('1'):
+    elif command == ord('1'):
         playObj.swap_equipped('sword')
 
-    elif c == ord('2'):
+    elif command == ord('2'):
         if playObj.get_bow():
             playObj.swap_equipped('bow')
 
-    elif c == ord('3'):
+    elif command == ord('3'):
         if playObj.get_shurikens():
             playObj.swap_equipped('shurikens')
 
@@ -368,18 +368,18 @@ def main():
         menuObj.display_menu(mapArr[fileNum].maxX + 2, playObj, mapArr[fileNum])
         mapArr[fileNum].stdscr.nodelay(False)
         while True:
-            c = mapArr[fileNum].stdscr.getch()
+            command = mapArr[fileNum].stdscr.getch()
 
-            if c != -1:
+            if command != -1:
                 mapArr[fileNum].stdscr.nodelay(True)
-                if c == ord('q'):  # or c == ord('n'): # Dev feature, allowed skipping levels
+                if command == ord('q'):  # or command == ord('n'): # Dev feature, allowed skipping levels
                     if (fileNum + 1) < len(inFile):
                         fileNum += 1
                     else:
                         fileNum = -1
                     break
                 else:
-                    newMap = game(c, playObj, mapArr[fileNum], mapArr, fileNum)
+                    newMap = game(command, playObj, mapArr[fileNum], mapArr, fileNum)
                     menuObj.display_menu(mapArr[fileNum].maxX + 2, playObj, mapArr[fileNum])
 
             # Enemy movement
@@ -401,7 +401,7 @@ def main():
                 fileNum = newMap
                 break
 
-        if c == ord('q'):  # or c == ord('n'): # Dev feature, allowed skipping levels
+        if command == ord('q'):  # or command == ord('n'): # Dev feature, allowed skipping levels
             mapArr[fileNum].stdscr.clear()
             mapArr[fileNum].stdscr.refresh()
             break
