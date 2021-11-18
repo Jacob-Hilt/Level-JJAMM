@@ -22,56 +22,11 @@ class creature:
 
         # moves along the x pos
         if self.typ == 2:
-            desx = 0
-            if self.direction == 1:
-                desx = self.xpos + 1
-            else:
-                desx = self.xpos - 1
-
-            if desx >= mapObj.maxX or desx < 0:
-                self.direction = self.direction * -1
-                return [0, mapObj]
-
-            if mapObj.objArr[self.ypos][desx] == '-':
-                mapObj.objArr[self.ypos][desx] = str(self.typ)
-                mapObj.objArr[self.ypos][self.xpos] = '-'
-                self.xpos = desx
-                return [1, mapObj]
-
-            # add a kill player here
-            if mapObj.objArr[self.ypos][desx] == 'p':
-                return [2, mapObj]
-
-            else:
-                self.direction = self.direction * -1
-                return [0, mapObj]
+            return moveEnemy(self, mapObj, self.typ)
 
         # moves along the y pos
         if self.typ == 3:
-            desy = 0
-            if self.direction == 1:
-                desy = self.ypos + 1
-            else:
-                desy = self.ypos - 1
-
-            if desy >= mapObj.maxY or desy < 0:
-                self.direction = self.direction * -1
-                return [0, mapObj]
-
-            if mapObj.objArr[desy][self.xpos] == '-':
-                mapObj.objArr[desy][self.xpos] = str(self.typ)
-                mapObj.objArr[self.ypos][self.xpos] = '-'
-                self.ypos = desy
-                return [1, mapObj]
-
-            # add a kill player here
-            if mapObj.objArr[desy][self.xpos] == 'p':
-                return [2, mapObj]
-
-            else:
-                self.direction = self.direction * -1
-                return [0, mapObj]
-
+            return moveEnemy(self, mapObj, self.typ)
         return [1, mapObj]
 
     def dead(self):
@@ -80,3 +35,46 @@ class creature:
 
     def status(self):
         return self.alive
+
+
+def moveEnemy(self, mapObj, selfType):
+    if selfType ==2:
+        selfPos = self.xpos
+        maxVar = mapObj.maxX
+    if selfType ==3:
+        selfPos = self.ypos
+        maxVar = mapObj.maxY
+		
+    desVar = 0
+    if self.direction == 1:
+        desVar = selfPos + 1
+    else:
+        desVar = selfPos - 1
+
+    if desVar >= maxVar or desVar < 0:
+        self.direction = self.direction * -1
+        return [0, mapObj]
+				
+    if selfType ==2:
+        left = self.ypos
+        right = desVar
+    if selfType ==3:
+        left = desVar
+        right = self.xpos
+				
+    if mapObj.objArr[left][right] == '-':
+        mapObj.objArr[left][right] = str(selfType)
+        mapObj.objArr[self.ypos][self.xpos] = '-'
+        if selfType ==2: 
+            self.xpos = desVar 
+        if selfType ==3: 
+            self.ypos = desVar 
+        return [1, mapObj]
+
+    # add a kill player here
+    if mapObj.objArr[left][right] == 'p':
+        return [2, mapObj]
+
+    else:
+        self.direction = self.direction * -1
+        return [0, mapObj]
