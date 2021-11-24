@@ -55,8 +55,8 @@ class Player:
         self.equipped = swap
 
     # check for enemy in destination cell
-    def enemy_there(self, mapObj, desy, desx):
-        if mapObj.objArr[desy][desx].isnumeric() and mapObj.exitArr[desy][desx] < 0:
+    def enemy_there(self, mapObj, y_destination, x_destination):
+        if mapObj.objArr[y_destination][x_destination].isnumeric() and mapObj.exitArr[y_destination][x_destination] < 0:
             # print('you died')
             self.deaths += 1
             return True
@@ -81,42 +81,42 @@ class Player:
             return False
 
     def move(self, keystroke, mapObj, fileNum):
-        desx = 0
-        desy = 0
+        x_destination = 0
+        y_destination = 0
         # moving up
         if keystroke == 'w':
-            desy = self.y_pos - 1
-            desx = self.x_pos
+            y_destination = self.y_pos - 1
+            x_destination = self.x_pos
 
         # moving left
         elif keystroke == 'a':
-            desy = self.y_pos
-            desx = self.x_pos - 1
+            y_destination = self.y_pos
+            x_destination = self.x_pos - 1
 
         # moving down
         elif keystroke == 's':
-            desy = self.y_pos + 1
-            desx = self.x_pos
+            y_destination = self.y_pos + 1
+            x_destination = self.x_pos
 
         # moving right
         elif keystroke == 'd':
-            desy = self.y_pos
-            desx = self.x_pos + 1
+            y_destination = self.y_pos
+            x_destination = self.x_pos + 1
 
         # check for out of bounds movement
-        if desx >= mapObj.maxX or desx < 0 or desy >= mapObj.maxY or desy < 0:
+        if x_destination >= mapObj.maxX or x_destination < 0 or y_destination >= mapObj.maxY or y_destination < 0:
             return
 
-        dest = mapObj.objArr[desy][desx]
+        dest = mapObj.objArr[y_destination][x_destination]
 
         if dest == 'w' or dest.isupper():
             return
-        elif self.enemy_there(mapObj, desy, desx):
+        elif self.enemy_there(mapObj, y_destination, x_destination):
             # print('You died') # If we include quotes like this,
             # we'll want to print them at a specific location in
             # menu. Perhaps we could create menu functions to
             # call here, and when an item is picked up?
-            mapObj.objArr[desy][desx] = 'd'
+            mapObj.objArr[y_destination][x_destination] = 'd'
             mapObj.displayMap()
             # mapObj.stdscr.refresh()
             time.sleep(1)
@@ -128,21 +128,21 @@ class Player:
             # print('You picked up the item!')
 
         # Previously:  elif dest == 'e'
-        elif mapObj.exitArr[desy][desx] >= 0:
+        elif mapObj.exitArr[y_destination][x_destination] >= 0:
             '''
-            if mapObj.exitArr[desy][desx] < fileNum:
+            if mapObj.exitArr[y_destination][x_destination] < fileNum:
                 for y in range(mapObj.maxY):
                     for x in range(mapObj.maxX):
                         mapObj.initArr[y][x] = mapObj.objArr[y][x]
-                return mapObj.exitArr[desy][desx]
+                return mapObj.exitArr[y_destination][x_destination]
             '''
 
-            if mapObj.winCheck(self) or mapObj.exitArr[desy][desx] < fileNum:
+            if mapObj.winCheck(self) or mapObj.exitArr[y_destination][x_destination] < fileNum:
                 '''
                 mapObj.objArr[self.y_pos][self.x_pos] = '-'
                 dest = 'p'
                 mapObj.displayMap()
-                dest = mapObj.objArr[desy][desx]
+                dest = mapObj.objArr[y_destination][x_destination]
                 '''
                 mapObj.startY = self.y_pos
                 mapObj.startX = self.x_pos
@@ -154,15 +154,15 @@ class Player:
                 for y in range(mapObj.maxY):
                     for x in range(mapObj.maxX):
                         mapObj.initArr[y][x] = mapObj.objArr[y][x]
-                return mapObj.exitArr[desy][desx]
+                return mapObj.exitArr[y_destination][x_destination]
 
         '''
-        elif mapObj.exitArr[desy][desx] == 'q':
+        elif mapObj.exitArr[y_destination][x_destination] == 'q':
             if mapObj.winCheck(self):
                 mapObj.objArr[self.y_pos][self.x_pos] = '-'
                 dest = 'p'
                 mapObj.displayMap()
-                dest = mapObj.objArr[desy][desx]
+                dest = mapObj.objArr[y_destination][x_destination]
                 mapObj.startY = self.y_pos
                 mapObj.startX = self.x_pos
                 time.sleep(1)
@@ -178,12 +178,12 @@ class Player:
         '''
 
         # updates objArr for map
-        mapObj.objArr[desy][desx] = 'p'
+        mapObj.objArr[y_destination][x_destination] = 'p'
         if mapObj.exitArr[self.y_pos][self.x_pos] < 0:
             mapObj.objArr[self.y_pos][self.x_pos] = '-'
         else:
             mapObj.objArr[self.y_pos][self.x_pos] = mapObj.initArr[self.y_pos][self.x_pos]
-        self.x_pos = desx
-        self.y_pos = desy
+        self.x_pos = x_destination
+        self.y_pos = y_destination
 
         mapObj.displayMap()
