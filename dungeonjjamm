@@ -68,18 +68,18 @@ def main(stdscr):
         menuObj.display_menu(mapArr[fileNum].maxX + 2, playObj, mapArr[fileNum])
         mapArr[fileNum].stdscr.nodelay(False)
         while True:
-            c = mapArr[fileNum].stdscr.getch()
+            command = mapArr[fileNum].stdscr.getch()
 
-            if c != -1:
+            if command != -1:
                 mapArr[fileNum].stdscr.nodelay(True)
-                if c == ord('q'):  # or c == ord('n'): # Dev feature, allowed skipping levels
+                if command == ord('q'):  # or command == ord('n'): # Dev feature, allowed skipping levels
                     if (fileNum + 1) < len(inFile):
                         fileNum += 1
                     else:
                         fileNum = -1
                     break
                 else:
-                    newMap = game(c, playObj, mapArr[fileNum], mapArr, fileNum)
+                    newMap = game(command, playObj, mapArr[fileNum], mapArr, fileNum)
                     menuObj.display_menu(mapArr[fileNum].maxX + 2, playObj, mapArr[fileNum])
 
             # Enemy movement
@@ -101,7 +101,7 @@ def main(stdscr):
                 fileNum = newMap
                 break
 
-        if c == ord('q'):  # or c == ord('n'): # Dev feature, allowed skipping levels
+        if command == ord('q'):  # or command == ord('n'): # Dev feature, allowed skipping levels
             mapArr[fileNum].stdscr.clear()
             mapArr[fileNum].stdscr.refresh()
             break
